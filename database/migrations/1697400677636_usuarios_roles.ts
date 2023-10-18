@@ -5,13 +5,10 @@ export default class extends BaseSchema {
 
   public async up () {
     this.schema.createTable(this.tableName, (table) => {
-      table.increments('id')
-
-      /**
-       * Uses timestamptz for PostgreSQL and DATETIME2 for MSSQL
-       */
-      table.timestamp('created_at', { useTz: true })
-      table.timestamp('updated_at', { useTz: true })
+      table.integer('usr_id').unsigned().references('id').inTable('usuarios')
+      table.integer('rol_id').unsigned().references('id').inTable('rols')
+      table.integer('eva_id').unsigned().references('id').inTable('evaluacions')
+      table.timestamps()
     })
   }
 
