@@ -1,6 +1,6 @@
 import { DateTime } from 'luxon'
 import { BaseModel, HasMany, column, hasMany } from '@ioc:Adonis/Lucid/Orm'
-import TipoLabor from 'app/Models/TipoLabor'
+import TipoLabor from 'App/Models/TipoLabor'
 
 export default class Labor extends BaseModel {
   @column({ columnName: 'lab_id',isPrimary: true })
