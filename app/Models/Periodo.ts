@@ -2,6 +2,8 @@ import { DateTime } from 'luxon'
 import { BaseModel, column } from '@ioc:Adonis/Lucid/Orm'
 
 export default class Periodo extends BaseModel {
+  public static table = 'periodo'
+
   @column({ columnName: 'per_id',isPrimary: true })
   public per_id: number
 

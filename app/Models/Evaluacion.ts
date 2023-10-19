@@ -1,17 +1,18 @@
 import { DateTime } from 'luxon'
 import { BaseModel, column, hasMany, HasMany, ManyToMany, manyToMany } from '@ioc:Adonis/Lucid/Orm'
-import Labor from 'app/Models/Labor'
-import Periodo from 'app/Models/Periodo'
-import Usuario_rol from 'app/Models/Usuario_rol'
+import Labor from 'App/Models/Labor'
+import Periodo from 'App/Models/Periodo'
+import Usuario_rol from 'App/Models/Usuario_rol'
 
 export default class Evaluacion extends BaseModel {
+  public static table = 'evaluacion'
 
   //Columnas propias de la tabla
   @column({ columnName: 'eva_id',isPrimary: true })
   public eva_id: number
 
   @column({columnName: 'eva_estado'})
-  public eva_estado: number
+  public eva_estado: string
 
   @column({columnName: 'eva_puntaje'})
   public eva_puntaje: number
