@@ -3,6 +3,9 @@ import { BaseModel, ManyToMany, column, manyToMany } from '@ioc:Adonis/Lucid/Orm
 import Rol from 'App/Models/Rol'
 
 export default class Usuario extends BaseModel {
+
+  public static table = 'usuario'
+
   @column({columnName: 'usu_id', isPrimary: true })
   public usu_id: number
 

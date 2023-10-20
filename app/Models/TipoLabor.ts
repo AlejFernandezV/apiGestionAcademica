@@ -2,6 +2,9 @@ import { DateTime } from 'luxon'
 import { BaseModel, column } from '@ioc:Adonis/Lucid/Orm'
 
 export default class TipoLabor extends BaseModel {
+
+  public static table = 'tipo_labor'
+
   @column({columnName: 'tl_id' ,isPrimary: true })
   public tl_id: number
 
