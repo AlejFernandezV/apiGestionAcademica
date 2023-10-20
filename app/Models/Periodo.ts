@@ -11,10 +11,10 @@ export default class Periodo extends BaseModel {
   public per_nombre: string
 
   @column.dateTime()
-  public per_fechaInicio: DateTime
+  public per_fecha_inicio: DateTime
 
   @column.dateTime()
-  public per_fechaFin: DateTime
+  public per_fecha_fin: DateTime
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime

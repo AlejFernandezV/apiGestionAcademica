@@ -3,6 +3,9 @@ import { BaseModel, HasMany, column, hasMany } from '@ioc:Adonis/Lucid/Orm'
 import TipoLabor from 'App/Models/TipoLabor'
 
 export default class Labor extends BaseModel {
+
+  public static table = 'labor'
+
   @column({ columnName: 'lab_id',isPrimary: true })
   public id: number
 
