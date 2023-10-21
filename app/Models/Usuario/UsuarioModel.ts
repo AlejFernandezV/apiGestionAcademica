@@ -1,6 +1,6 @@
 import { DateTime } from 'luxon'
 import { BaseModel, ManyToMany, column, manyToMany } from '@ioc:Adonis/Lucid/Orm'
-import Rol from 'App/Models/Rol'
+import Rol from 'App/Models/Rol/RolModel'
 
 export default class Usuario extends BaseModel {
 

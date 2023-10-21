@@ -1,5 +1,6 @@
-import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
-import Usuario from 'App/Models/Usuario'
+import type { HttpContextContract} from '@ioc:Adonis/Core/HttpContext'
+import Usuario from 'App/Models/Usuario/UsuarioModel'
+
 export default class UsuariosController {
 
   public async index({}: HttpContextContract) {
@@ -9,19 +10,18 @@ export default class UsuariosController {
   public async create({}: HttpContextContract) {}
 
   public async store({request}: HttpContextContract) {
-    const cuerpo = request.only(['usu_id', 'usu_email', 'usu_password'
+
+    const cuerpo = request.only(['usu_email', 'usu_password'
     , 'usu_nombre', 'usu_apellido', 'usu_genero'
-    , 'usu_estudio', 'createdAt', 'updatedAt'])
+    , 'usu_estudio'])
+
     const usuario = await Usuario.create({
-      usu_id: cuerpo.usu_id,
       usu_email: cuerpo.usu_email,
       usu_password: cuerpo.usu_password,
       usu_nombre: cuerpo.usu_nombre,
       usu_apellido: cuerpo.usu_apellido,
       usu_genero: cuerpo.usu_genero,
       usu_estudio: cuerpo.usu_estudio,
-      createdAt: cuerpo.createdAt,
-      updatedAt: cuerpo.updatedAt,
     })
     return usuario
   }
@@ -40,7 +40,7 @@ export default class UsuariosController {
     , 'usu_estudio', 'createdAt', 'updatedAt'])
     const usuarioId = request.param('id')
     const usuario = await Usuario.findOrFail(usuarioId)
-    await usuario.merge(cuerpo).save
+    await usuario.merge(cuerpo).save()
     return usuario
   }
 

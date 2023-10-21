@@ -1,5 +1,5 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
-import Periodo from 'App/Models/Periodo'
+import Periodo from 'App/Models/Periodo/PeriodoModel'
 
 export default class PeriodosController {
   public async index({}: HttpContextContract) {

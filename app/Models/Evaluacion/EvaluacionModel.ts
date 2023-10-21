@@ -1,8 +1,8 @@
 import { DateTime } from 'luxon'
 import { BaseModel, column, hasMany, HasMany, ManyToMany, manyToMany } from '@ioc:Adonis/Lucid/Orm'
-import Labor from 'App/Models/Labor'
-import Periodo from 'App/Models/Periodo'
-import Usuario_rol from 'App/Models/Usuario_rol'
+import Labor from 'App/Models/Labor/LaborModel'
+import Periodo from 'App/Models/Periodo/PeriodoModel'
+import Usuario_rol from 'App/Models/UsuarioRol/UsuarioRolModel'
 
 export default class Evaluacion extends BaseModel {
   public static table = 'evaluacion'
@@ -21,7 +21,6 @@ export default class Evaluacion extends BaseModel {
   public eva_resultado: string
 
   //Relaciones
-
   @hasMany(() => Labor, {
     foreignKey: 'lab_id',
   })
