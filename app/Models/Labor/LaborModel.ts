@@ -1,13 +1,13 @@
 import { DateTime } from 'luxon'
 import { BaseModel, HasMany, column, hasMany } from '@ioc:Adonis/Lucid/Orm'
-import TipoLabor from 'App/Models/TipoLabor'
+import TipoLabor from 'App/Models/TipoLabor/TipoLaborModel'
 
 export default class Labor extends BaseModel {
 
   public static table = 'labor'
 
-  @column({ columnName: 'lab_id',isPrimary: true })
-  public id: number
+  @column({ columnName: 'lab_id',isPrimary: true})
+  public lab_id: number
 
   @column({columnName: 'lab_nombre'})
   public lab_nombre: string

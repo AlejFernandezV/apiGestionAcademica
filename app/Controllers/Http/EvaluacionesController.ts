@@ -1,5 +1,5 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
-import Evaluacion from 'App/Models/Evaluacion'
+import Evaluacion from 'App/Models/Evaluacion/EvaluacionModel'
 export default class EvaluacionesController {
   public async index({}: HttpContextContract) {
     return await Evaluacion.all()
