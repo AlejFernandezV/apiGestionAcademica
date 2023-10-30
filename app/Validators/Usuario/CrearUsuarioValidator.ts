@@ -46,10 +46,10 @@ export default class CrearUsuarioValidator {
   public messages: CustomMessages = {
     'usu_email.string.email': 'El correo no es valido',
     'usu_email.string.unique': 'El correo ya se encuentra registrado',
-    'usu_password.string.maxLength': 'La contraseña no puede tener mas de 20 caracteres',
-    'usu_nombre.string.maxLength': 'El nombre no puede tener mas de 50 caracteres',
+    'usu_password.string.maxLength': 'La contraseña no puede tener más de 20 caracteres',
+    'usu_nombre.string.maxLength': 'El nombre no puede tener más de 50 caracteres',
     'usu_apellido.string.maxLength': 'El apellido no puede tener mas de 50 caracteres',
-    'usu_genero.string.notIn': 'El genero no es valido',
+    'usu_genero.string.notIn': 'El genero no es válido',
     'usu_estudio.string.maxLength': 'El estudio no puede tener mas de 50 caracteres',
   }
 }
