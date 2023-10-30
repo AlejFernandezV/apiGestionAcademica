@@ -20,7 +20,7 @@
 
 import Route from '@ioc:Adonis/Core/Route'
 
-Route.get('/evaluaciones', 'EvaluacionesController.index')
+Route.resource('/evaluaciones', 'EvaluacionesController')
 
 Route.resource('/periodos', 'PeriodosController')
 
