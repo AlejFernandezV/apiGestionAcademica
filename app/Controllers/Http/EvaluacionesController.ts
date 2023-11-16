@@ -1,3 +1,4 @@
+import { Application } from '@adonisjs/core/build/standalone'
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Database from '@ioc:Adonis/Lucid/Database'
 import Api from 'App/Helpers/ResponseApi'
@@ -5,6 +6,7 @@ import Evaluacion from 'App/Models/Evaluacion/EvaluacionModel'
 import Labor from 'App/Models/Labor/LaborModel'
 import Periodo from 'App/Models/Periodo/PeriodoModel'
 import UsuarioRol from 'App/Models/UsuarioRol/UsuarioRolModel'
+
 
 export default class EvaluacionesController {
 

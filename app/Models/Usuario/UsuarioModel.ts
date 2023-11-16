@@ -1,6 +1,7 @@
 import { DateTime } from 'luxon'
-import { BaseModel, ManyToMany, column, manyToMany } from '@ioc:Adonis/Lucid/Orm'
+import { BaseModel, ManyToMany, column, manyToMany, beforeSave } from '@ioc:Adonis/Lucid/Orm'
 import Rol from 'App/Models/Rol/RolModel'
+import Hash from '@ioc:Adonis/Core/Hash'
 
 export default class Usuario extends BaseModel {
 
@@ -41,4 +42,11 @@ export default class Usuario extends BaseModel {
     pivotRelatedForeignKey: 'rol_id',
   })
   public roles: ManyToMany<typeof Rol>
+
+  @beforeSave()
+  public static async hashPassword(usuario: Usuario){
+    if(usuario.$dirty.usu_password){
+      usuario.usu_password = await Hash.make(usuario.usu_password)
+    }
+  }
 }
