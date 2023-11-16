@@ -1,19 +1,18 @@
 import type { HttpContextContract} from '@ioc:Adonis/Core/HttpContext'
 import Usuario from 'App/Models/Usuario/UsuarioModel'
-
+import UsuRolModel from 'App/Models/UsuarioRol/UsuarioRolModel'
+import Api from 'App/Helpers/ResponseApi'
 export default class UsuariosController {
 
   public async index({}: HttpContextContract) {
     return await Usuario.query().from('usuario').select('*').orderBy('usu_id')
   }
 
-  public async create({}: HttpContextContract) {}
-
-  public async store({request}: HttpContextContract) {
-
+  public async store({request,response}: HttpContextContract) {
+    const api = new Api()
     const cuerpo = request.only(['usu_email', 'usu_password'
     , 'usu_nombre', 'usu_apellido', 'usu_genero'
-    , 'usu_estudio'])
+    , 'usu_estudio','rol_id'])
 
     const usuario = await Usuario.create({
       usu_email: cuerpo.usu_email,
@@ -23,7 +22,18 @@ export default class UsuariosController {
       usu_genero: cuerpo.usu_genero,
       usu_estudio: cuerpo.usu_estudio,
     })
-    return usuario
+
+    if(usuario!=null){
+      const results = UsuRolModel.create({
+        usu_id: usuario.usu_id,
+        rol_id: cuerpo.rol_id
+      })
+
+      api.setResult(results)
+    }else{
+      api.setState(404,"Error","Fallo al crear usuario")
+    }
+    return response.json(api.toResponse())
   }
 
   public async show({request}: HttpContextContract) {
@@ -31,8 +41,6 @@ export default class UsuariosController {
     const usuario = await Usuario.findOrFail(usuarioId)
     return usuario
   }
-
-  public async edit({}: HttpContextContract) {}
 
   public async update({request}: HttpContextContract) {
     const cuerpo = request.only(['usu_id', 'usu_email', 'usu_password'

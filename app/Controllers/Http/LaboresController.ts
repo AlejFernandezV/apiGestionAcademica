@@ -8,10 +8,9 @@ export default class LaboresController {
   public async create({}: HttpContextContract) {}
 
   public async store({request}: HttpContextContract) {
-    const cuerpo = request.only(['lab_id','lab_nombre', 'lab_horas'
+    const cuerpo = request.only(['lab_nombre', 'lab_horas'
       ,'tipo_labores','createdAt','updatedAt'])
     const labor = await Labor.create({
-      lab_id: cuerpo.lab_id,
       lab_nombre: cuerpo.lab_nombre,
       lab_horas: cuerpo.lab_horas,
       //tipo_labores: cuerpo.tipo_labores,

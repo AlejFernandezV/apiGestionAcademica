@@ -20,6 +20,15 @@ export default class Evaluacion extends BaseModel {
   @column({columnName: 'eva_resultado'})
   public eva_resultado: string
 
+  @column({columnName: 'lab_id'})
+  public lab_id: number
+
+  @column({columnName: 'per_id'})
+  public per_id: number
+
+  @column({columnName: 'usu_id'})
+  public usu_id: number
+
   //Relaciones
   @hasMany(() => Labor, {
     foreignKey: 'lab_id',
