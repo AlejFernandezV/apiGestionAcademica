@@ -1,4 +1,4 @@
-class responseApi {
+export default class responseApi {
   structure = {
     status: "success",
     message: "",
@@ -27,5 +27,4 @@ class responseApi {
     };
   };
 }
-let estructuraApi = new responseApi()
-module.exports = estructuraApi;
+

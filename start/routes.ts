@@ -20,11 +20,15 @@
 
 import Route from '@ioc:Adonis/Core/Route'
 
+Route.resource('/labores', 'LaboresController')
+
 Route.resource('/evaluaciones', 'EvaluacionesController')
 
 Route.resource('/periodos', 'PeriodosController')
 
 Route.resource('/usuarios', 'UsuariosController')
+
+Route.get('/upload', 'DocumentosController.uploadFile')
 
 Route.get('/', async () => {
   return { hello: 'world' }

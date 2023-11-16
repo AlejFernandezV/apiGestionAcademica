@@ -8,13 +8,12 @@ export default class LaboresController {
   public async create({}: HttpContextContract) {}
 
   public async store({request}: HttpContextContract) {
-    const cuerpo = request.only(['lab_id','lab_nombre', 'lab_horas'
-      ,'tipo_labores','createdAt','updatedAt'])
+    const cuerpo = request.only(['lab_nombre', 'lab_horas'
+      ,'tl_id','createdAt','updatedAt'])
     const labor = await Labor.create({
-      lab_id: cuerpo.lab_id,
       lab_nombre: cuerpo.lab_nombre,
       lab_horas: cuerpo.lab_horas,
-      //tipo_labores: cuerpo.tipo_labores,
+      tl_id: cuerpo.tl_id,
       createdAt: cuerpo.createdAt,
       updatedAt: cuerpo.updatedAt,
     })
@@ -30,9 +29,9 @@ export default class LaboresController {
 
   public async update({request}: HttpContextContract) {
     const cuerpo = request.only(['lab_id','lab_nombre', 'lab_horas'
-     ,'tipo_labores','createdAt','updatedAt'])
+     ,'tl_id','createdAt','updatedAt'])
     const laborId =  request.param('id')
-    const labor = await laborId.findOrFail(laborId)
+    const labor = await Labor.findOrFail(laborId)
     return labor.merge(cuerpo).save()
   }
 

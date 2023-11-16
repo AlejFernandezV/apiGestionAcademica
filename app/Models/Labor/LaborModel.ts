@@ -15,14 +15,18 @@ export default class Labor extends BaseModel {
   @column({columnName: 'lab_horas' })
   public lab_horas: number
 
-  @hasMany(()=>TipoLabor, {
-    foreignKey: 'tl_id',
-  })
-  public tipo_labores: HasMany<typeof TipoLabor>
+  @column({columnName: 'tl_id'})
+  public tl_id: number
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
 
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   public updatedAt: DateTime
+
+  //Relaciones
+  @hasMany(()=>TipoLabor, {
+    foreignKey: 'tl_id',
+  })
+  public tipo_labores: HasMany<typeof TipoLabor>
 }
