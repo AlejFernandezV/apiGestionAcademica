@@ -52,10 +52,19 @@ export default class UsuariosController {
     return usuario
   }
 
-  public async destroy({request}: HttpContextContract) {
+  public async destroy({request,response}: HttpContextContract) {
+    const api = new Api()
     const usuarioId = request.param('id')
     const usuario = await Usuario.findOrFail(usuarioId)
-    await usuario.delete()
-    return true
+
+    if(usuario!=null){
+      const results = await usuario.delete()
+      api.setResult(results)
+    }
+    else{
+      api.setState(404,"Error","No se encontró el usuario")
+    }
+
+    return response.json(api.toResponse())
   }
 }
