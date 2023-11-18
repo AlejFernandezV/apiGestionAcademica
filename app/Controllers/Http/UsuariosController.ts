@@ -1,6 +1,6 @@
 import type { HttpContextContract} from '@ioc:Adonis/Core/HttpContext'
 import Usuario from 'App/Models/Usuario/UsuarioModel'
-import UsuRolModel from 'App/Models/UsuarioRol/UsuarioRolModel'
+import UsuarioRol from 'App/Models/UsuarioRol/UsuarioRolModel'
 import Api from 'App/Helpers/ResponseApi'
 export default class UsuariosController {
 
@@ -24,7 +24,7 @@ export default class UsuariosController {
     })
 
     if(usuario!=null){
-      const results = UsuRolModel.create({
+      const results = UsuarioRol.create({
         usu_id: usuario.usu_id,
         rol_id: cuerpo.rol_id
       })
@@ -55,10 +55,11 @@ export default class UsuariosController {
   public async destroy({request,response}: HttpContextContract) {
     const api = new Api()
     const usuarioId = request.param('id')
-    const usuario = await Usuario.findOrFail(usuarioId)
+    const usuario = await Usuario.findByOrFail('usu_id', usuarioId)
 
     if(usuario!=null){
       const results = await usuario.delete()
+
       api.setResult(results)
     }
     else{

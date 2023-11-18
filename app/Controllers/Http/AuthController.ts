@@ -8,16 +8,22 @@ export default class AuthController{
     const api = new Api()
     const data = request.only(['usu_email','usu_password'])
     try{
-      const usuario = await Usuario.query().where('usu_email',data.usu_email).firstOrFail()
+      // Lookup usuario manually
+      const usuario = await Usuario.query()
+        .where("usu_email", data.usu_email)
+        .firstOrFail();
 
-      if(!(await Hash.verify(usuario.usu_password,data.usu_password))){
-        api.setResult("No valido")
-        api.setState(404,"Error","Contraseña inválida")
-      }else{
-        await auth.use('web').login(usuario)
-        api.setResult("Inicio de sesión exitoso")
+      // Verify password
+      if (!(await Hash.verify(usuario.usu_password, data.usu_password))) {
+        api.setState(404,"Error","Contraseña no válida")
       }
+      // Generate token
+      const token = await auth.use("api").generate(usuario, {
+        expiresIn: '1 days'
+      });
+      api.setResult(token);
     }catch(error){
+      console.log(error);
       api.setState(404,"Error","El usuario no existe")
     }finally{
       return response.json(api.toResponse())
@@ -26,8 +32,8 @@ export default class AuthController{
 
   public async logout({auth,response}) {
     const api = new Api()
-    await auth.logout()
-    api.setResult("Cerrado de sesión exitoso")
+    await auth.use('api').revoke()
+    api.setResult({revoked: true})
     return response.json(api.toResponse())
   }
 

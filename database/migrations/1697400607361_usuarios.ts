@@ -8,6 +8,7 @@ export default class extends BaseSchema {
       table.increments('usu_id')
       table.string('usu_email', 50).notNullable()
       table.string('usu_password', 1000).notNullable()
+      table.string('usu_remember_token').nullable()
       table.string('usu_nombre', 50).notNullable()
       table.string('usu_apellido', 50).notNullable()
       table.string('usu_genero', 1).notNullable()

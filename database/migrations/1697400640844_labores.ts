@@ -8,7 +8,7 @@ export default class extends BaseSchema {
       table.increments('lab_id')
       table.string('lab_nombre', 50).notNullable()
       table.integer('lab_horas').notNullable()
-      table.integer('tl_id').unsigned().references('tl_id').inTable('tipo_labor')
+      table.integer('tl_id').unsigned().references('tl_id').inTable('tipo_labor').notNullable()
       table.timestamps()
     })
   }
