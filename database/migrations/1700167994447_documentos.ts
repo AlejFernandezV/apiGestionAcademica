@@ -9,12 +9,7 @@ export default class extends BaseSchema {
       table.integer('eva_id').unsigned().references('eva_id').inTable('evaluacion').notNullable()
       table.string('doc_nombre',100).notNullable()
       table.string('doc_ruta', 200).notNullable()
-
-      /**
-       * Uses timestamptz for PostgreSQL and DATETIME2 for MSSQL
-       */
-      table.timestamp('created_at', { useTz: true })
-      table.timestamp('updated_at', { useTz: true })
+      table.timestamps()
     })
   }
 

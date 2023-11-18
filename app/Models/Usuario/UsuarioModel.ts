@@ -17,7 +17,7 @@ export default class Usuario extends BaseModel {
   public usu_password: string
 
   @column({columnName: 'usu_token'})
-  public usu_token: string | null
+  public usu_remember_token: string | null
 
   @column({columnName: 'usu_nombre'})
   public usu_nombre: string
