@@ -2,28 +2,34 @@
 import Api from 'App/Helpers/ResponseApi'
 import Usuario from 'App/Models/Usuario/UsuarioModel'
 import Hash from '@ioc:Adonis/Core/Hash'
+import Database from '@ioc:Adonis/Lucid/Database'
 
 export default class AuthController{
   public async login({auth,request,response}){
     const api = new Api()
     const data = request.only(['usu_email','usu_password'])
     try{
-      // Lookup usuario manually
-      const usuario = await Usuario.query()
+      const loginResult = await Database
+        .from("usuario")
+        .select("usuario.usu_id","usuario.usu_password","rol.rol_descripcion")
+        .join("usuario_rol","usuario.usu_id","usuario_rol.usu_id")
+        .join("rol","usuario_rol.rol_id","rol.rol_id")
         .where("usu_email", data.usu_email)
-        .firstOrFail();
-
-      // Verify password
-      if (!(await Hash.verify(usuario.usu_password, data.usu_password))) {
+        .firstOrFail()
+      if (!(await Hash.verify(loginResult.usu_password, data.usu_password))) {
         api.setState(404,"Error","Contraseña no válida")
       }
-      // Generate token
-      const token = await auth.use("api").generate(usuario, {
+      const token = await auth.use("api").generate(loginResult, {
         expiresIn: '1 days'
-      });
-      api.setResult(token);
+      })
+      const results = {
+        rol_description: loginResult.rol_descripcion,
+        token: token
+      }
+
+      api.setResult(results)
     }catch(error){
-      console.log(error);
+      console.log(error)
       api.setState(404,"Error","El usuario no existe")
     }finally{
       return response.json(api.toResponse())

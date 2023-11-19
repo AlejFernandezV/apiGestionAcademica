@@ -32,7 +32,7 @@ Route.resource('/periodos', 'PeriodosController')
 
 Route.resource('/usuarios', 'UsuariosController')
 
-Route.get('/upload', 'DocumentosController.uploadFile')
+Route.post('/upload', 'DocumentosController.uploadFile')
 
 Route.get('/', async () => {
   return { hello: 'world' }
