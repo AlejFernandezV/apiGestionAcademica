@@ -1,4 +1,3 @@
-import { Application } from '@adonisjs/core/build/standalone'
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Database from '@ioc:Adonis/Lucid/Database'
 import Api from 'App/Helpers/ResponseApi'
