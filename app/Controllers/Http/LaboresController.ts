@@ -1,74 +1,62 @@
-import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
-import Api from 'App/Helpers/ResponseApi'
 import Labor from 'App/Models/Labor/LaborModel'
+import Database from '@ioc:Adonis/Lucid/Database'
+import TipoLabor from 'App/Models/TipoLabor/TipoLaborModel'
 export default class LaboresController {
-  public async index({}: HttpContextContract) {
-    return await Labor.query().select('*').orderBy('lab_id')
+  public async indexAll() {
+    return await Database
+    .from('labor')
+    .join('tipo_labor','labor.tl_id','tipo_labor.tl_id')
+    .select('labor.lab_id','labor.lab_nombre','labor.lab_horas','tipo_labor.tl_descripcion')
+    .orderBy('labor.lab_id')
   }
 
-  public async create({}: HttpContextContract) {}
+  public async indexAllNamesTL(){
+    return await TipoLabor
+    .query()
+    .select('tl_descripcion')
+    .orderBy('tl_id')
+  }
 
-  public async store({request,response}: HttpContextContract) {
-    const api = new Api()
-    const cuerpo = request.only(['lab_nombre', 'lab_horas'
-      ,'tl_id','createdAt','updatedAt'])
-
+  public async store(labor: Labor) {
     try{
-      const results = await Labor.create({
-        lab_nombre: cuerpo.lab_nombre,
-        lab_horas: cuerpo.lab_horas,
-        tl_id: cuerpo.tl_id,
-        createdAt: cuerpo.createdAt,
-        updatedAt: cuerpo.updatedAt,
-      })
-
-      api.setResult(results)
+      return await Labor.create(labor)
     }catch(error){
-      api.setState("404","Error",error)
-    }finally{
-      return response.json(api.toResponse())
+      console.log(error)
+      return null
     }
   }
 
-  public async show({request,response}: HttpContextContract) {
-    const api = new Api()
+  public async findByName(nombreLabor:string) {
     try{
-      const laborId =  request.param('id')
-      const results = await Labor.findOrFail(laborId)
-      api.setResult(results)
+      return await Labor.findByOrFail("lab_nombre",nombreLabor)
     }catch(error){
-      api.setState("404","Error",error)
-    }finally{
-      return response.json(api.toResponse())
+      console.log(error);
+      return null
     }
   }
 
-  public async update({request,response}: HttpContextContract) {
-    const api = new Api()
-    const cuerpo = request.only(['lab_id','lab_nombre', 'lab_horas'
-     ,'tl_id','createdAt','updatedAt'])
+  public async update(data:any) {
     try{
-      const labor = await Labor.findOrFail(cuerpo.lab_id)
-      const results = labor.merge(cuerpo).save()
-      api.setResult(results)
+      const idTipoLabor = (await TipoLabor.findByOrFail("tl_descripcion",data.tl_descripcion))
+      const labor = await Labor.findOrFail(data.lab_id)
+      return labor.merge({
+        lab_nombre: data.lab_nombre,
+        lab_horas: data.lab_horas,
+        tl_id: idTipoLabor.tl_id
+      }).save()
     }catch(error){
-      api.setState("404","Error",error)
-    }finally{
-      return response.json(api.toResponse())
+      console.log(error);
+      return null
     }
   }
 
-  public async destroy({request,response}: HttpContextContract) {
-    const api = new Api()
-    const laborId =  request.param('id')
+  public async destroy(nombreLabor:string) {
     try{
-      const labor = await Labor.findOrFail(laborId)
-      const results = await labor.delete()
-      api.setResult(results)
+      const labor = await Labor.findByOrFail("lab_nombre",nombreLabor)
+      return await labor.delete()
     }catch(error){
-      api.setState("404","Error",error)
-    }finally{
-      return response.json(api.toResponse())
+      console.log(error);
+      return null
     }
   }
 }

@@ -1,86 +1,68 @@
-import type { HttpContextContract} from '@ioc:Adonis/Core/HttpContext'
 import Usuario from 'App/Models/Usuario/UsuarioModel'
 import UsuarioRol from 'App/Models/UsuarioRol/UsuarioRolModel'
-import Api from 'App/Helpers/ResponseApi'
 export default class UsuariosController {
 
-  public async index({}: HttpContextContract) {
-    return await Usuario.query().from('usuario').select('*').orderBy('usu_id')
+  public async showAll() {
+    return await Usuario
+    .query()
+    .select('usu_email','usu_nombre','usu_apellido','usu_estudio')
+    .orderBy('usu_id')
   }
 
-  public async store({request,response}: HttpContextContract) {
-    const api = new Api()
-    const data = request.only(['usu_email', 'usu_password'
-    , 'usu_nombre', 'usu_apellido', 'usu_genero'
-    , 'usu_estudio','rol_id'])
+  public async showAllNames(){
+    return await Usuario
+    .query()
+    .select('usu_nombre','usu_apellido')
+    .orderBy('usu_nombre')
+  }
 
-    const usuario = await Usuario.create({
-      usu_email: data.usu_email,
-      usu_password: data.usu_password,
-      usu_nombre: data.usu_nombre,
-      usu_apellido: data.usu_apellido,
-      usu_genero: data.usu_genero,
-      usu_estudio: data.usu_estudio,
-    })
+  public async store(usuario: Usuario, usuario_rol: UsuarioRol) {
+    const resultUsu = await Usuario.create(usuario)
 
-    if(usuario!=null){
-      const results = UsuarioRol.create({
-        usu_id: usuario.usu_id,
-        rol_id: data.rol_id
+    if(resultUsu!=null){
+      await UsuarioRol.create({
+        usu_id: resultUsu.usu_id,
+        rol_id: usuario_rol.rol_id
       })
-
-      api.setResult(results)
-    }else{
-      api.setState(404,"Error","Fallo al crear usuario")
-    }
-    return response.json(api.toResponse())
-  }
-
-  public async show({request,response}: HttpContextContract) {
-    const  api = new Api()
-    const usuarioId = request.param('id')
-    try{
-      const results = await Usuario.findOrFail(usuarioId)
-      api.setResult(results)
-    }catch(error){
-      console.log(error)
-      api.setState(404,"Error","Fallo al mostrar el usuario")
-    }finally{
-      return response.json(api.toResponse())
-    }
-  }
-
-  public async update({request,response}: HttpContextContract) {
-    const api = new Api()
-    const data = request.only(['usu_id', 'usu_email', 'usu_password'
-    , 'usu_nombre', 'usu_apellido', 'usu_genero'
-    , 'usu_estudio', 'createdAt', 'updatedAt'])
-
-    try{
-      const usuario = await Usuario.findOrFail(data.usu_id)
-      const results = await usuario.merge(data).save()
-      api.setResult(results)
-    }catch(error){
-      api.setState("404","Error","No se pudo realizar la actualización del usuario")
-    }finally{
-      return response.json(api.toResponse)
-    }
-  }
-
-  public async destroy({request,response}: HttpContextContract) {
-    const api = new Api()
-    const usuarioId = request.param('id')
-    const usuario = await Usuario.findByOrFail('usu_id', usuarioId)
-
-    if(usuario!=null){
-      const results = await usuario.delete()
-
-      api.setResult(results)
+      return true
     }
     else{
-      api.setState(404,"Error","No se encontró el usuario")
+      return false
+    }
+  }
+
+  public async findByName(parametros: any) {
+    const queryBuilder = Usuario.query()
+
+    for (const campo in parametros) {
+      queryBuilder.where(`usu_${campo}`, 'LIKE', `${parametros[campo]}`);
     }
 
-    return response.json(api.toResponse())
+    return await queryBuilder
+    .select('usu_email','usu_nombre','usu_apellido','usu_genero','usu_estudio')
+
+  }
+
+  public async update(data: any) {
+    try{
+      const usuario = await Usuario.findOrFail(data.usu_id)
+      return {code:200, "result":await usuario.merge(data).save()}
+    }catch(error){
+      return {code:404 ,"Error: ":error}
+    }
+  }
+
+  public async destroy(parametros) {
+    try{
+      const queryBuilder = Usuario.query()
+
+      for (const campo in parametros) {
+        queryBuilder.where(`usu_${campo}`, 'LIKE', `${parametros[campo]}`);
+      }
+
+      return {code:200, "result": await queryBuilder.delete()}
+    }catch(error){
+      return {code:404 ,"Error: ":error}
+    }
   }
 }

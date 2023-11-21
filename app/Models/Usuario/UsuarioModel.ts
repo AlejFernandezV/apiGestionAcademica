@@ -10,14 +10,14 @@ export default class Usuario extends BaseModel {
   @column({columnName: 'usu_id', isPrimary: true })
   public usu_id: number
 
+  @column({columnName: 'usu_tipo_id'})
+  public usu_tipo_id: string
+
   @column({columnName: 'usu_email'})
   public usu_email: string
 
   @column({ columnName: 'usu_password', serializeAs: null})
   public usu_password: string
-
-  @column({columnName: 'usu_token'})
-  public usu_remember_token: string | null
 
   @column({columnName: 'usu_nombre'})
   public usu_nombre: string
