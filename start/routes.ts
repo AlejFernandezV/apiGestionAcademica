@@ -20,19 +20,13 @@
 
 import Route from '@ioc:Adonis/Core/Route'
 
-Route.post('/login', 'AuthController.login')
+import './routes/routesAuth'
+import './routes/routesUsuarios'
+import './routes/routesLabores'
+import './routes/routesPeriodos'
+import './routes/routesEvaluaciones'
+import './routes/routesDocumentos'
 
-Route.get('/logout','AuthController.logout')
-
-Route.resource('/labores', 'LaboresController')
-
-Route.resource('/evaluaciones', 'EvaluacionesController')
-
-Route.resource('/periodos', 'PeriodosController')
-
-Route.resource('/usuarios', 'UsuariosController')
-
-Route.post('/upload', 'DocumentosController.uploadFile')
 
 Route.get('/', async () => {
   return { hello: 'world' }
