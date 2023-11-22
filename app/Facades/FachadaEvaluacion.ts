@@ -101,13 +101,13 @@ export default class FachadaEvaluacion{
     const api = new Api()
     const data = request.only(['eva_id','eva_resultado'])
     const evaControlador = new EvaControlador()
-    const evaluacion = await Evaluacion.findByOrFail("eva_id",data.eva_id)
 
-    if(evaluacion===null){
+    const result = await evaControlador.updateResult(data)
+
+    if(result===null){
       api.setState(404,"Error", "No se pudo actualizar el resultado de la evaluacion")
     }else{
-      const results = await evaControlador.updateResult(data)
-      api.setResult(results)
+      api.setResult(result)
     }
     return response.json(api.toResponse())
   }

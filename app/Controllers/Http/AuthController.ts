@@ -24,7 +24,7 @@ export default class AuthController{
       })
 
       const results = {
-        rol_description: loginResult.rol_descripcion,
+        rol_descripcion: loginResult.rol_descripcion,
         token: token
       }
 
@@ -43,5 +43,4 @@ export default class AuthController{
     api.setResult({revoked: true})
     return response.json(api.toResponse())
   }
-
 }
