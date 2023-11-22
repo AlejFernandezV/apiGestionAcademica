@@ -5,7 +5,7 @@ const fachadaUsuario = new FachadaUsuario()
 
 //Peticiones GET
 Route.get('/usuarios', fachadaUsuario.listarUsuarios)
-Route.get('/usuarios_nombres', fachadaUsuario.listarUsuariosPorNombre)
+Route.get('/usuarios_nombres', fachadaUsuario.listarNombresUsuarios)
 Route.get('/usuarios/buscar_por_nombre', fachadaUsuario.buscarPorNombre)
 
 //Peticiones POST
