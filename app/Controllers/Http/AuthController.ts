@@ -43,5 +43,4 @@ export default class AuthController{
     api.setResult({revoked: true})
     return response.json(api.toResponse())
   }
-
 }
