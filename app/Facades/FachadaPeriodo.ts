@@ -51,7 +51,8 @@ export default class FachadaPeriodo{
   public async crearPeriodo({request,response}: HttpContextContract){
     const api = new Api()
     const perControlador = new PerControlador()
-    const data = request.only(['per_nombre','per_anio','per_semestre', 'per_fecha_inicio', 'per_fecha_fin'])
+    const data = request.only(['per_nombre','per_anio',
+    'per_semestre', 'per_fecha_inicio', 'per_fecha_fin'])
     const periodo = new Periodo()
 
     periodo.per_nombre = data.per_nombre
