@@ -39,7 +39,7 @@ export default class UsuariosController {
     }
 
     return await queryBuilder
-    .select('usu_email','usu_nombre','usu_apellido','usu_genero','usu_estudio')
+    .select('usu_num_doc','usu_tipo_doc','usu_email','usu_nombre','usu_apellido','usu_genero','usu_estudio','usu_estado')
 
   }
 
