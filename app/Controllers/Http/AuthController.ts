@@ -10,8 +10,8 @@ export default class AuthController{
     try{
       const loginResult = await Database
         .from("usuario")
-        .select("usuario.id","usuario.usu_password","rol.rol_descripcion")
-        .join("usuario_rol","usuario.id","usuario_rol.usu_id")
+        .select("usuario.usu_id","usuario.usu_password","rol.rol_descripcion")
+        .join("usuario_rol","usuario.usu_id","usuario_rol.usu_id")
         .join("rol","usuario_rol.rol_id","rol.rol_id")
         .where("usu_email", data.usu_email)
         .firstOrFail()
