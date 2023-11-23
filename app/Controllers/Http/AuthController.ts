@@ -24,7 +24,9 @@ export default class AuthController{
       })
 
       const results = {
-        usu_id: loginResult.usu_id,
+        usu_num_doc: loginResult.usu_num_doc,
+        usu_nombre: loginResult.usu_nombre,
+        usu_email: loginResult.usu_email,
         rol_descripcion: loginResult.rol_descripcion,
         token: token
       }
