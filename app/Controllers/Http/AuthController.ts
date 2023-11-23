@@ -10,7 +10,7 @@ export default class AuthController{
     try{
       const loginResult = await Database
         .from("usuario")
-        .select("usuario.usu_id","usuario.usu_password","rol.rol_descripcion")
+        .select("usuario.usu_id",'usuario.usu_num_doc','usuario.usu_nombre','usuario.usu_apellido',"usuario.usu_email","usuario.usu_password","rol.rol_descripcion")
         .join("usuario_rol","usuario.usu_id","usuario_rol.usu_id")
         .join("rol","usuario_rol.rol_id","rol.rol_id")
         .where("usu_email", data.usu_email)
@@ -24,6 +24,7 @@ export default class AuthController{
       })
 
       const results = {
+        usu_id: loginResult.usu_id,
         rol_descripcion: loginResult.rol_descripcion,
         token: token
       }
