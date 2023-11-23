@@ -7,11 +7,17 @@ export default class Usuario extends BaseModel {
 
   public static table = 'usuario'
 
-  @column({columnName: 'usu_id', isPrimary: true })
+  @column({columnName: 'id', isPrimary: true})
+  public id: number
+
+  @column({columnName: 'usu_id'})
   public usu_id: number
 
   @column({columnName: 'usu_tipo_id'})
   public usu_tipo_id: string
+
+  @column({columnName: 'usu_token_remember'})
+  public usu_token_remember: string | null
 
   @column({columnName: 'usu_email'})
   public usu_email: string
@@ -30,6 +36,9 @@ export default class Usuario extends BaseModel {
 
   @column({columnName: 'usu_estudio'})
   public usu_estudio: string
+
+  @column({columnName: 'usu_estado'})
+  public usu_estado: string
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
