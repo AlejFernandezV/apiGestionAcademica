@@ -37,17 +37,21 @@ export default class FachadaUsuario{
   public async crearUsuario({request,response}: HttpContextContract){
     const api = new Api()
     const controladorUsuario = new UsuControlador()
-    const data = request.only(['usu_email', 'usu_password'
+    const data = request.only(['usu_id','usu_tipo_id','usu_email', 'usu_password'
     , 'usu_nombre', 'usu_apellido', 'usu_genero'
-    , 'usu_estudio','rol_id'])
+    , 'usu_estudio','rol_id','usu_estado'])
 
     const usuario = new Usuario()
+    usuario.usu_id = data.usu_id
+    usuario.usu_tipo_id = data.usu_tipo_id
     usuario.usu_email = data.usu_email
     usuario.usu_password = data.usu_password
     usuario.usu_nombre = data.usu_nombre
     usuario.usu_apellido = data.usu_apellido
     usuario.usu_genero = data.usu_genero
     usuario.usu_estudio = data.usu_estudio
+    usuario.usu_estado = data.usu_estado
+
 
     const usuario_rol = new UsuarioRol()
     usuario_rol.rol_id = data.rol_id
