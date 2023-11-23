@@ -75,7 +75,7 @@ const authConfig: AuthConfig = {
         | the primary key is the right choice.
         |
         */
-        identifierKey: 'usu_id',
+        identifierKey: 'id',
 
         /*
         |--------------------------------------------------------------------------
