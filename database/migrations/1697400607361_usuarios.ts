@@ -5,9 +5,9 @@ export default class extends BaseSchema {
 
   public async up () {
     this.schema.createTable(this.tableName, (table) => {
-      table.increments('id')
-      table.bigInteger('usu_id').notNullable()
-      table.string('usu_tipo_id',50).notNullable()
+      table.increments('usu_id')
+      table.bigInteger('usu_num_doc').notNullable()
+      table.string('usu_tipo_doc',50).notNullable()
       table.string('usu_token_remember',200).nullable()
       table.string('usu_email', 50).notNullable()
       table.string('usu_password', 1000).notNullable()

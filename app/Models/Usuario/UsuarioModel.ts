@@ -7,14 +7,14 @@ export default class Usuario extends BaseModel {
 
   public static table = 'usuario'
 
-  @column({columnName: 'id', isPrimary: true})
-  public id: number
-
-  @column({columnName: 'usu_id'})
+  @column({columnName: 'usu_id', isPrimary: true})
   public usu_id: number
 
-  @column({columnName: 'usu_tipo_id'})
-  public usu_tipo_id: string
+  @column({columnName: 'usu_num_doc'})
+  public usu_num_doc: number
+
+  @column({columnName: 'usu_tipo_doc'})
+  public usu_tipo_doc: string
 
   @column({columnName: 'usu_token_remember'})
   public usu_token_remember: string | null
