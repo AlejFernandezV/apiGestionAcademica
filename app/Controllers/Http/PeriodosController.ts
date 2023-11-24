@@ -21,7 +21,7 @@ export default class PeriodosController {
     try{
       return await Periodo.create(periodo)
     }catch(error){
-
+      console.log(error);
       return 404
     }
   }
@@ -40,6 +40,7 @@ export default class PeriodosController {
       const periodo = await Periodo.findOrFail(data.per_id)
       return await periodo.merge(data).save()
     }catch(error){
+      console.log(error);
       return 404
     }
   }
@@ -49,6 +50,7 @@ export default class PeriodosController {
       const periodo = await Periodo.findByOrFail("per_nombre",per_nombre)
       return await periodo.delete()
     }catch(error){
+      console.log(error);
       return 404
     }
   }
