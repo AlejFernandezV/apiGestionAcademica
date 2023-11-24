@@ -116,7 +116,7 @@ export default class FachadaUsuario{
   public async buscarPorNumDoc({request,response}: HttpContextContract){
     const api = new Api()
     const controladorUsuario = new UsuControlador()
-    const params = request.qs()
+    const params = request.input("num_doc")
 
     if (Object.keys(params).length === 0) {
       api.setState(400, 'Error', 'Se requiere al menos un parámetro de búsqueda');
@@ -135,8 +135,8 @@ export default class FachadaUsuario{
   public async actualizarUsuario({request,response}: HttpContextContract){
     const api = new Api()
     const controladorUsuario = new UsuControlador()
-    const data = request.only(['usu_id', 'usu_email', 'usu_password', 'usu_remember_token'
-    , 'usu_nombre', 'usu_apellido', 'usu_genero', 'usu_estudio'])
+    const data = request.only(['usuario.usu_id','usu_num_doc','usu_tipo_doc','usu_email', 'usu_password','rol_id'
+    , 'usu_nombre', 'usu_apellido', 'usu_genero', 'usu_estudio','usu_estado'])
 
     const result = await controladorUsuario.update(data)
 
