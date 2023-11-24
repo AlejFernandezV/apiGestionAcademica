@@ -21,6 +21,7 @@ export default class PeriodosController {
     try{
       return await Periodo.create(periodo)
     }catch(error){
+
       return 404
     }
   }
