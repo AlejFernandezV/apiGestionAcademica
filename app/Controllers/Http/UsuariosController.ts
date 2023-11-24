@@ -46,9 +46,26 @@ export default class UsuariosController {
   public async update(data: any) {
     try{
       const usuario = await Usuario.findOrFail(data.usu_id)
-      return {code:200, "result":await usuario.merge(data).save()}
+      const result =await usuario.merge(data).save()
+      return {code:200, "result":result}
     }catch(error){
       return {code:404 ,"Error: ":error}
+    }
+  }
+
+  public async getRememberToken(usu_id: number){
+    try{
+      const token = await Usuario
+      .query()
+      .select("usu_token_remember")
+      .where("usu_id", usu_id)
+      .firstOrFail()
+
+      return token
+
+    }catch(error){
+      console.log("Error al obtener el token del usuario",error)
+      return null
     }
   }
 
