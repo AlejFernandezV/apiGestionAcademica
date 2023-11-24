@@ -11,7 +11,7 @@ export default class FachadaEvaluacion{
     const api = new Api()
     const evaControlador = new EvaControlador()
 
-    const results = await evaControlador.index()
+    const results = await evaControlador.indexAll()
 
     if(results.length <= 0){
       api.setState(404,"Error","No hay evaluaciones para listar")
@@ -24,7 +24,7 @@ export default class FachadaEvaluacion{
   public async listarEvaluacionesPorDocente({request, response}: HttpContextContract){
     const api = new Api()
     const evaControlador = new EvaControlador()
-    const idDocente = request.input("id")
+    const idDocente = request.input("num_doc")
 
     const results = await evaControlador.indexByDocente(idDocente)
 
@@ -39,7 +39,7 @@ export default class FachadaEvaluacion{
   public async listarEvaluacionesPorPeriodo({request, response}: HttpContextContract){
     const api = new Api()
     const evaControlador = new EvaControlador()
-    const periodoNombre = request.input("nombre")
+    const periodoNombre = request.input("per_nombre")
 
     const results = await evaControlador.indexByPeriodo(periodoNombre)
 
@@ -51,21 +51,80 @@ export default class FachadaEvaluacion{
     return response.json(api.toResponse())
   }
 
+  public async listarEvaluacionesActivas({response}: HttpContextContract){
+    const api = new Api()
+    const evaControlador = new EvaControlador()
+
+    const results = await evaControlador.indexAllActive()
+
+    if(results.length <= 0){
+      api.setState(404,"Error","No hay evaluaciones de este profesor para listar")
+    }else{
+      api.setResult(results)
+    }
+    return response.json(api.toResponse())
+  }
+
+  public async listarEvaluacionesInactivas({response}: HttpContextContract){
+    const api = new Api()
+    const evaControlador = new EvaControlador()
+
+    const results = await evaControlador.indexAllInactive()
+
+    if(results.length <= 0){
+      api.setState(404,"Error","No hay evaluaciones de este profesor para listar")
+    }else{
+      api.setResult(results)
+    }
+    return response.json(api.toResponse())
+  }
+
+  public async listarEvaluacionesTerminadas({response}: HttpContextContract){
+    const api = new Api()
+    const evaControlador = new EvaControlador()
+
+    const results = await evaControlador.indexAllFinished()
+
+    if(results.length <= 0){
+      api.setState(404,"Error","No hay evaluaciones de este profesor para listar")
+    }else{
+      api.setResult(results)
+    }
+    return response.json(api.toResponse())
+  }
+
+  public async listarEvaluacionesActivasDocente({request, response}: HttpContextContract){
+    const api = new Api()
+    const evaControlador = new EvaControlador()
+    const idDocente = request.input("num_doc")
+
+    const results = await evaControlador.indexAllActiveByDocente(idDocente)
+
+    if(results.length <= 0){
+      api.setState(404,"Error","No hay evaluaciones de este profesor para listar")
+    }else{
+      api.setResult(results)
+    }
+    return response.json(api.toResponse())
+  }
+
   public async crearEvaluacion({request, response}: HttpContextContract){
     const api = new Api()
-    const data = request.only(['eva_estado', 'eva_puntaje', 'eva_resultado', 'lab_id', 'per_id', 'usu_id'])
+    const data = request.only(['eva_estado', 'eva_puntaje',
+    'eva_resultado', 'lab_id', 'per_id', 'usu_id'])
+
     const evaControlador = new EvaControlador()
     const evaluacion = new Evaluacion()
 
-    if(data.eva_estado === null){
+    if(data.eva_estado === null || data.eva_estado === undefined){
       api.setState(404,"Error","No se pudo crear la evaluacion, el estado no puede ser nulo")
       return response.json(api.toResponse())
     }
-    if(data.eva_puntaje === null){
+    if(data.eva_puntaje === null || data.eva_puntaje === undefined){
       api.setState(404,"Error","No se pudo crear la evaluacion, el puntaje no puede ser nulo")
       return response.json(api.toResponse())
     }
-    if(data.eva_resultado === null){
+    if(data.eva_resultado === null || data.eva_resultado === undefined){
       api.setState(404,"Error","No se pudo crear la evaluacion, el resultado no puede ser nulo")
       return response.json(api.toResponse())
     }
@@ -99,7 +158,7 @@ export default class FachadaEvaluacion{
 
   public async actualizarResultado({request, response}: HttpContextContract){
     const api = new Api()
-    const data = request.only(['eva_id','eva_resultado'])
+    const data = request.only(['eva_id','eva_resultado','eva_puntuacion'])
     const evaControlador = new EvaControlador()
 
     const result = await evaControlador.updateResult(data)
@@ -108,6 +167,36 @@ export default class FachadaEvaluacion{
       api.setState(404,"Error", "No se pudo actualizar el resultado de la evaluacion")
     }else{
       api.setResult(result)
+    }
+    return response.json(api.toResponse())
+  }
+
+  public async actualizarEstado({request, response}: HttpContextContract){
+    const api = new Api()
+    const data = request.only(['eva_id','eva_estado'])
+    const evaControlador = new EvaControlador()
+
+    const result = await evaControlador.updateState(data)
+
+    if(result===null){
+      api.setState(404,"Error", "No se pudo actualizar el resultado de la evaluacion")
+    }else{
+      api.setResult(result)
+    }
+    return response.json(api.toResponse())
+  }
+
+  public async eliminarEvaluacion({request, response}: HttpContextContract){
+    const api = new Api()
+    const eva_id = request.param('id')
+    const evaControlador = new EvaControlador()
+
+    const result = await evaControlador.destroy(eva_id)
+
+    if(result===false){
+      api.setState(404,"Error", "No se pudo actualizar el resultado de la evaluacion")
+    }else{
+      api.setResult("Evaluacion eliminada con éxito")
     }
     return response.json(api.toResponse())
   }
