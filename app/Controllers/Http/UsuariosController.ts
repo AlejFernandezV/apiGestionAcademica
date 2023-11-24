@@ -35,7 +35,7 @@ export default class UsuariosController {
     .from('usuario')
     .join('usuario_rol','usuario.usu_id','usuario_rol.usu_id')
     .select('usuario.usu_nombre','usuario.usu_apellido')
-    .where('usuario_rol.rol_id','!=',5)
+    .where('usuario_rol.rol_id','!=',5).andWhere('usuario_rol.rol_id','!=',6)
     .orderBy('usuario.usu_nombre')
   }
 

@@ -4,15 +4,15 @@ import FachadaPeriodo from 'App/Facades/FachadaPeriodo'
 const fachadaPer = new FachadaPeriodo()
 
 //Peticiones GET
-Route.get('/periodos', fachadaPer.listarPeriodos)
-Route.get('/nombres_periodos', fachadaPer.listarNombresPeriodos)
-Route.get('/periodo', fachadaPer.buscarPeriodoPorNombre)
+Route.get('/periodos/listar', fachadaPer.listarPeriodos)
+Route.get('/periodos/listar_nombres', fachadaPer.listarNombresPeriodos)
+Route.get('/periodos/buscar_por_nombre', fachadaPer.buscarPeriodoPorNombre)
 
 //Peticiones POST
-Route.post('/periodos', fachadaPer.crearPeriodo)
+Route.post('/periodos/crear', fachadaPer.crearPeriodo)
 
 //Peticiones PUT
-Route.put('/periodos', fachadaPer.actualizarPeriodo)
+Route.put('/periodos/actualizar', fachadaPer.actualizarPeriodo)
 
 //Peticiones DELETE
-Route.delete('/periodos', fachadaPer.eliminarPeriodoPorNombre)
+Route.delete('/periodos/eliminar', fachadaPer.eliminarPeriodoPorNombre)

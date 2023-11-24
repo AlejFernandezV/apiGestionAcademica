@@ -4,14 +4,14 @@ import FachadaLabor from 'App/Facades/FachadaLabor'
 const fachadaLab = new FachadaLabor()
 
 //Peticiones GET
-Route.get('/labores', fachadaLab.listarLabores)
-Route.get('/labor', fachadaLab.buscarPorNombreLabor)
+Route.get('/labores/listar', fachadaLab.listarLabores)
+Route.get('/labores/listar_por_nombre', fachadaLab.buscarPorNombreLabor)
 
 //Peticiones POST
-Route.post('/labores', fachadaLab.crearLabor)
+Route.post('/labores/crear', fachadaLab.crearLabor)
 
 //Peticiones PUT
-Route.put('/labores', fachadaLab.actualizarLabor)
+Route.put('/labores/actualizar', fachadaLab.actualizarLabor)
 
 //Peticiones DELETE
-Route.delete('/labores', fachadaLab.eliminarLabor)
+Route.delete('/labores/eliminar', fachadaLab.eliminarLabor)
