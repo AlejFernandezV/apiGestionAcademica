@@ -1,6 +1,4 @@
-import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Database from '@ioc:Adonis/Lucid/Database'
-import Api from 'App/Helpers/ResponseApi'
 import Evaluacion from 'App/Models/Evaluacion/EvaluacionModel'
 
 export default class EvaluacionesController {
