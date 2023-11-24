@@ -5,6 +5,8 @@ import Labor from 'App/Models/Labor/LaborModel'
 import Periodo from 'App/Models/Periodo/PeriodoModel'
 import UsuarioRol from 'App/Models/UsuarioRol/UsuarioRolModel'
 import Api from 'App/Helpers/ResponseApi'
+import Mail from '@ioc:Adonis/Addons/Mail'
+import Usuario from 'App/Models/Usuario/UsuarioModel'
 
 export default class FachadaEvaluacion{
   public async listarEvaluaciones({response}: HttpContextContract){
@@ -132,14 +134,15 @@ export default class FachadaEvaluacion{
     try{
       const labor = await Labor.findByOrFail('lab_id',data.lab_id)
       const periodo = await Periodo.findByOrFail('per_id',data.per_id)
-      const usuario = await UsuarioRol.findByOrFail('usu_id',data.usu_id)
+      const usuario_rol = await UsuarioRol.findByOrFail('usu_id',data.usu_id)
+      const usuario = await Usuario.findByOrFail('usu_id',data.usu_id)
 
       evaluacion.eva_estado = data.eva_estado
       evaluacion.eva_puntaje = data.eva_puntaje
       evaluacion.eva_resultado = data.eva_resultado
       evaluacion.lab_id = labor.lab_id
       evaluacion.per_id = periodo.per_id
-      evaluacion.usu_id = usuario.usu_id
+      evaluacion.usu_id = usuario_rol.usu_id
 
       const results = await evaControlador.store(evaluacion)
 
@@ -148,6 +151,21 @@ export default class FachadaEvaluacion{
       }else{
         api.setResult(results)
       }
+
+      const messageContent = `Por favor, no responder este correo.\n
+      Este correo solamente es para notificarle que se le ha asignado
+      una nueva autoevaluacion para ${labor.lab_nombre}.\n
+      Por favor, dilgenciarla antes del  cierre del semestre.\n
+      Universitariamente Gestión Académica Unicauca`
+
+
+      await Mail.send(message => {
+        message
+          .from('coordinator@unicauca.edu.co')
+          .to(usuario.usu_email, `${usuario.usu_nombre} ${usuario.usu_apellido}`)
+          .subject(`Autoevaluación asignada para ${labor.lab_nombre}`)
+          .html(messageContent)
+      })
 
     }catch(error){
       console.log(error)

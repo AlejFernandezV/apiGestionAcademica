@@ -7,7 +7,7 @@ export default class UsuariosController {
     return await Database
     .from('usuario')
     .join('usuario_rol','usuario.usu_id','usuario_rol.usu_id')
-    .select('usuario.usu_num_doc','usuario.usu_email','usuario.usu_nombre','usuario.usu_apellido','usuario.usu_genero','usuario.usu_estudio')
+    .select("usuario.usu_id",'usuario.usu_num_doc','usuario.usu_email','usuario.usu_nombre','usuario.usu_apellido','usuario.usu_genero','usuario.usu_estudio')
     .where('usuario_rol.rol_id','!=',6)
     .orderBy('usuario.usu_id')
   }
@@ -25,7 +25,7 @@ export default class UsuariosController {
     return await Database
     .from('usuario')
     .join('usuario_rol','usuario.usu_id','usuario_rol.usu_id')
-    .select('usuario.usu_num_doc','usuario.usu_email','usuario.usu_nombre','usuario.usu_apellido','usuario.usu_genero','usuario.usu_estudio')
+    .select("usuario.usu_id",'usuario.usu_num_doc','usuario.usu_email','usuario.usu_nombre','usuario.usu_apellido','usuario.usu_genero','usuario.usu_estudio')
     .where('usuario_rol.rol_id','!=',5).andWhere('usuario_rol.rol_id','!=',6)
     .orderBy('usuario.usu_id')
   }
@@ -62,13 +62,13 @@ export default class UsuariosController {
     }
 
     return await queryBuilder
-    .select('usu_num_doc','usu_tipo_doc','usu_email','usu_nombre','usu_apellido','usu_genero','usu_estudio','usu_estado')
+    .select("usuario.usu_id",'usu_num_doc','usu_tipo_doc','usu_email','usu_nombre','usu_apellido','usu_genero','usu_estudio','usu_estado')
 
   }
 
   public async findByNumDoc(parametros: any) {
     return await Usuario.query()
-    .select('usu_num_doc','usu_tipo_doc','usu_email','usu_nombre','usu_apellido','usu_genero','usu_estudio','usu_estado')
+    .select("usuario.usu_id",'usu_num_doc','usu_tipo_doc','usu_email','usu_nombre','usu_apellido','usu_genero','usu_estudio','usu_estado')
     .where('usu_num_doc', parametros.num_doc)
   }
 
@@ -98,7 +98,7 @@ export default class UsuariosController {
     }
   }
 
-  public async destroy(parametros) {
+  public async destroy(parametros:any) {
     try{
       const queryBuilder = Usuario.query()
 
