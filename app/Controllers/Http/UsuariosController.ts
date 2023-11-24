@@ -1,19 +1,42 @@
 import Usuario from 'App/Models/Usuario/UsuarioModel'
 import UsuarioRol from 'App/Models/UsuarioRol/UsuarioRolModel'
+import Database from "@ioc:Adonis/Lucid/Database"
 export default class UsuariosController {
 
-  public async showAll() {
-    return await Usuario
-    .query()
-    .select('usu_email','usu_nombre','usu_apellido','usu_estudio')
-    .orderBy('usu_id')
+  public async showAllForDean() {
+    return await Database
+    .from('usuario')
+    .join('usuario_rol','usuario.usu_id','usuario_rol.usu_id')
+    .select('usuario.usu_num_doc','usuario.usu_email','usuario.usu_nombre','usuario.usu_apellido','usuario.usu_genero','usuario.usu_estudio')
+    .where('usuario_rol.rol_id','!=',6)
+    .orderBy('usuario.usu_id')
   }
 
-  public async showAllNames(){
-    return await Usuario
-    .query()
-    .select('usu_nombre','usu_apellido')
-    .orderBy('usu_nombre')
+  public async showAllNamesForDean(){
+    return await Database
+    .from('usuario')
+    .join('usuario_rol','usuario.usu_id','usuario_rol.usu_id')
+    .select('usuario.usu_nombre','usuario.usu_apellido')
+    .where('usuario_rol.rol_id','!=',6)
+    .orderBy('usuario.usu_nombre')
+  }
+
+  public async showAllForCoordinator() {
+    return await Database
+    .from('usuario')
+    .join('usuario_rol','usuario.usu_id','usuario_rol.usu_id')
+    .select('usuario.usu_num_doc','usuario.usu_email','usuario.usu_nombre','usuario.usu_apellido','usuario.usu_genero','usuario.usu_estudio')
+    .where('usuario_rol.rol_id','!=',5)
+    .orderBy('usuario.usu_id')
+  }
+
+  public async showAllNamesForCoordinator(){
+    return await Database
+    .from('usuario')
+    .join('usuario_rol','usuario.usu_id','usuario_rol.usu_id')
+    .select('usuario.usu_nombre','usuario.usu_apellido')
+    .where('usuario_rol.rol_id','!=',5)
+    .orderBy('usuario.usu_nombre')
   }
 
   public async store(usuario: Usuario, usuario_rol: UsuarioRol) {
@@ -43,12 +66,35 @@ export default class UsuariosController {
 
   }
 
+  public async findByNumDoc(parametros: any) {
+    return await Usuario.query()
+    .select('usu_num_doc','usu_tipo_doc','usu_email','usu_nombre','usu_apellido','usu_genero','usu_estudio','usu_estado')
+    .where('usu_num_doc', parametros.num_doc)
+  }
+
   public async update(data: any) {
     try{
       const usuario = await Usuario.findOrFail(data.usu_id)
-      return {code:200, "result":await usuario.merge(data).save()}
+      const result =await usuario.merge(data).save()
+      return {code:200, "result":result}
     }catch(error){
       return {code:404 ,"Error: ":error}
+    }
+  }
+
+  public async getRememberToken(usu_id: number){
+    try{
+      const token = await Usuario
+      .query()
+      .select("usu_token_remember")
+      .where("usu_id", usu_id)
+      .firstOrFail()
+
+      return token
+
+    }catch(error){
+      console.log("Error al obtener el token del usuario",error)
+      return null
     }
   }
 

@@ -6,11 +6,11 @@ import Api from 'App/Helpers/ResponseApi'
 
 export default class FachadaUsuario{
 
-  public async listarUsuarios({}: HttpContextContract){
+  public async listarUsuariosParaDecano({}: HttpContextContract){
     const controladorUsuario = new UsuControlador()
     const api = new Api()
 
-    const results = await controladorUsuario.showAll()
+    const results = await controladorUsuario.showAllForDean()
 
     if(results.length <= 0){
       api.setState(404,"Error","No hay usuarios para listar")
@@ -20,11 +20,39 @@ export default class FachadaUsuario{
     return api.toResponse()
   }
 
-  public async listarNombresUsuarios({}: HttpContextContract){
+  public async listarNombresUsuariosParaDecano({}: HttpContextContract){
     const controladorUsuario = new UsuControlador()
     const api = new Api()
 
-    const results = await controladorUsuario.showAllNames()
+    const results = await controladorUsuario.showAllNamesForDean()
+
+    if(results.length <= 0){
+      api.setState(404,"Error","No hay usuarios para listar")
+    }
+
+    api.setResult(results)
+    return api.toResponse()
+  }
+
+  public async listarUsuariosParaCoordinador({}: HttpContextContract){
+    const controladorUsuario = new UsuControlador()
+    const api = new Api()
+
+    const results = await controladorUsuario.showAllForCoordinator()
+
+    if(results.length <= 0){
+      api.setState(404,"Error","No hay usuarios para listar")
+    }
+
+    api.setResult(results)
+    return api.toResponse()
+  }
+
+  public async listarNombresUsuariosParaCoordinador({}: HttpContextContract){
+    const controladorUsuario = new UsuControlador()
+    const api = new Api()
+
+    const results = await controladorUsuario.showAllNamesForCoordinator()
 
     if(results.length <= 0){
       api.setState(404,"Error","No hay usuarios para listar")
@@ -77,6 +105,25 @@ export default class FachadaUsuario{
     }
 
     const result = await controladorUsuario.findByName(params)
+
+    if(result==null){
+      api.setState(404,"Error","El usuario no existe")
+    }
+    api.setResult(result)
+    return response.json(api.toResponse())
+  }
+
+  public async buscarPorNumDoc({request,response}: HttpContextContract){
+    const api = new Api()
+    const controladorUsuario = new UsuControlador()
+    const params = request.qs()
+
+    if (Object.keys(params).length === 0) {
+      api.setState(400, 'Error', 'Se requiere al menos un parámetro de búsqueda');
+      return response.json(api.toResponse());
+    }
+
+    const result = await controladorUsuario.findByNumDoc(params)
 
     if(result==null){
       api.setState(404,"Error","El usuario no existe")
