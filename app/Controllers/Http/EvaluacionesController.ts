@@ -28,6 +28,7 @@ export default class EvaluacionesController {
     return await Database
     .from('evaluacion')
     .join('usuario_rol','evaluacion.usu_id','usuario_rol.usu_id')
+    .join('usario','usuario_rol.usu_id','usuario.usu_id')
     .join('periodo','evaluacion.per_id','periodo.per_id')
     .join('labor', 'evaluacion.lab_id','labor.lab_id')
     .join('tipo_labor','labor.tl_id','tipo_labor.tl_id')
