@@ -63,13 +63,14 @@ export default class UsuariosController {
 
     return await queryBuilder
     .select("usuario.usu_id",'usu_num_doc','usu_tipo_doc','usu_email','usu_nombre','usu_apellido','usu_genero','usu_estudio','usu_estado')
-
+    .firstOrFail()
   }
 
   public async findByNumDoc(num_doc: any) {
     return await Usuario.query()
     .select("usuario.usu_id",'usu_num_doc','usu_tipo_doc','usu_email','usu_nombre','usu_apellido','usu_genero','usu_estudio','usu_estado')
     .where('usu_num_doc', num_doc)
+    .firstOrFail()
   }
 
   public async update(data: any) {
