@@ -135,10 +135,21 @@ export default class FachadaUsuario{
   public async actualizarUsuario({request,response}: HttpContextContract){
     const api = new Api()
     const controladorUsuario = new UsuControlador()
-    const data = request.only(['usu_num_doc','usu_tipo_doc','usu_email','rol_id'
+    const data = request.only(['usu_num_doc_old','usu_num_doc_new','usu_tipo_doc','usu_email','rol_id'
     , 'usu_nombre', 'usu_apellido', 'usu_genero', 'usu_estudio','usu_estado'])
 
-    const result = await controladorUsuario.updateByNumDoc(data)
+    const newData = {
+      usu_num_doc: data.usu_num_doc_new,
+      usu_tipo_doc: data.usu_tipo_doc,
+      usu_email: data.usu_email,
+      usu_nombre: data.usu_nombre,
+      usu_apellido: data.usu_apellido,
+      usu_genero: data.usu_genero,
+      usu_estudio: data.usu_estudio,
+      usu_estado: data.usu_estado
+    }
+
+    const result = await controladorUsuario.updateByNumDoc(data.usu_num_doc_old,newData,data.rol_id)
 
     if(result.code == 404){
       api.setState(result.code,"Error","No se pudo actualizar el usuario")

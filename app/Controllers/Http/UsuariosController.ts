@@ -73,12 +73,18 @@ export default class UsuariosController {
     .firstOrFail()
   }
 
-  public async updateByNumDoc(data: any) {
+  public async updateByNumDoc(usu_num_doc_old:number,data: any,rol_id:any) {
     try{
-      const usuario = await Usuario.findByOrFail("usu_num_doc",data.usu_num_doc)
-      const result =await usuario.merge(data).save()
+      const usuario = await Usuario.findByOrFail("usu_num_doc",usu_num_doc_old)
+
+      const result = await usuario.merge(data).save()
+
+      if(rol_id != undefined){
+        usuario.related('roles').sync([rol_id]);
+      }
       return {code:200, "result":result}
     }catch(error){
+      console.log(error);
       return {code:404 ,"Error: ":error}
     }
   }
