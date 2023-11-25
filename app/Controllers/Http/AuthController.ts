@@ -90,7 +90,7 @@ export default class AuthController {
     const usuControlador = new UsuariosController()
     try{
       const data = {usu_id: usu_id, usu_token_remember:token}
-      await usuControlador.update(data)
+      await usuControlador.updateRememberToken(data)
     }catch(error){
       console.log("Error al actualizar el remember token");
     }
