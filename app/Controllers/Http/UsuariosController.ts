@@ -73,9 +73,9 @@ export default class UsuariosController {
     .firstOrFail()
   }
 
-  public async update(data: any) {
+  public async updateByNumDoc(data: any) {
     try{
-      const usuario = await Usuario.findOrFail(data.usu_id)
+      const usuario = await Usuario.findByOrFail("usu_num_doc",data.usu_num_doc)
       const result =await usuario.merge(data).save()
       return {code:200, "result":result}
     }catch(error){
@@ -99,16 +99,13 @@ export default class UsuariosController {
     }
   }
 
-  public async destroy(parametros:any) {
+  public async destroyByNumDoc(usu_num_doc:number) {
     try{
-      const queryBuilder = Usuario.query()
-
-      for (const campo in parametros) {
-        queryBuilder.where(`usu_${campo}`, 'LIKE', `${parametros[campo]}`);
-      }
-
-      return {code:200, "result": await queryBuilder.delete()}
+      const usuario = await Usuario.findByOrFail("usu_num_doc",usu_num_doc)
+      const result = await usuario.delete()
+      return {code:200, "result": result}
     }catch(error){
+      console.log(error);
       return {code:404 ,"Error: ":error}
     }
   }

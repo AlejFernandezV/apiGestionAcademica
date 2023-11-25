@@ -89,9 +89,9 @@ export default class FachadaPeriodo{
   public async eliminarPeriodoPorNombre({request,response}: HttpContextContract){
     const api = new Api()
     const perControlador = new PerControlador()
-    const data = request.only(['per_nombre'])
+    const per_nombre = request.input("nombre")
 
-    const result = await perControlador.destroy(data.per_nombre)
+    const result = await perControlador.destroy(per_nombre)
 
     if(result === 404){
       api.setState(404,"Error","No se pudo eliminar el periodo académico")

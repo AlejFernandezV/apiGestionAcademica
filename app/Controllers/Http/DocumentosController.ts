@@ -6,7 +6,7 @@ import Doc from 'App/Models/Documento/DocumentoModel'
 
 export default class DocumentosController {
   public async uploadFiles({ request, response }: HttpContextContract) {
-    const { usu_id, eva_id } = request.qs()
+    const { usu_num_doc, eva_id } = request.qs()
 
     const api = new Api()
     const ruta: string = Path.join(process.cwd(), "documents")
@@ -24,7 +24,7 @@ export default class DocumentosController {
       })
 
       for (const fileData of filesData.files) {
-        const nombre: string = `${usu_id}_${eva_id}_${fileData.clientName}`
+        const nombre: string = `${usu_num_doc}_${eva_id}_${fileData.clientName}`
 
         await Doc.create({
           eva_id: eva_id,

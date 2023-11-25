@@ -7,7 +7,7 @@ export default class NotificacionesController {
 
   public async listarNotificacionesUsuario({request,response}:HttpContextContract){
     const api = new Api()
-    const usu_id = request.param("usu_id")
+    const usu_id = request.input("usu_id")
 
     const results = await Database
     .from('')

@@ -11,7 +11,7 @@ Route.get('/evaluaciones/listar_activas', fachadaEva.listarEvaluacionesActivas)
 Route.get('/evaluaciones/listar_inactivas', fachadaEva.listarEvaluacionesInactivas)
 Route.get('/evaluaciones/listar_terminadas', fachadaEva.listarEvaluacionesTerminadas)
 Route.get('/evaluaciones/listar_activas_docente', fachadaEva.listarEvaluacionesActivasDocente)
-Route.get('/evaluaciones/listar_terminadas_docente', fachadaEva.listarEvaluacionesActivasDocente)
+Route.get('/evaluaciones/listar_terminadas_docente', fachadaEva.listarEvaluacionesInactivasDocente)
 
 //Peticiones POST
 Route.post('evaluaciones/crear', fachadaEva.crearEvaluacion)

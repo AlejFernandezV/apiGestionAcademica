@@ -135,10 +135,10 @@ export default class FachadaUsuario{
   public async actualizarUsuario({request,response}: HttpContextContract){
     const api = new Api()
     const controladorUsuario = new UsuControlador()
-    const data = request.only(['usuario.usu_id','usu_num_doc','usu_tipo_doc','usu_email','rol_id'
+    const data = request.only(['usu_num_doc','usu_tipo_doc','usu_email','rol_id'
     , 'usu_nombre', 'usu_apellido', 'usu_genero', 'usu_estudio','usu_estado'])
 
-    const result = await controladorUsuario.update(data)
+    const result = await controladorUsuario.updateByNumDoc(data)
 
     if(result.code == 404){
       api.setState(result.code,"Error","No se pudo actualizar el usuario")
@@ -149,17 +149,12 @@ export default class FachadaUsuario{
     return response.json(api.toResponse())
   }
 
-  public async eliminarPorNombre({request,response}: HttpContextContract){
+  public async eliminarPorNumDoc({request,response}: HttpContextContract){
     const api = new Api()
     const controladorUsuario = new UsuControlador()
-    const params = request.qs()
+    const usu_num_doc = request.input("num_doc")
 
-    if (Object.keys(params).length === 0) {
-      api.setState(400, 'Error', 'Se requiere al menos un parámetro de búsqueda');
-      return response.json(api.toResponse());
-    }
-
-    const result = await controladorUsuario.destroy(params)
+    const result = await controladorUsuario.destroyByNumDoc(usu_num_doc)
 
     if(result.code == 404){
       api.setState(result.code,"Error","No se pudo actualizar el usuario")
