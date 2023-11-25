@@ -24,7 +24,7 @@ export default class EvaluacionesController {
 
   }
 
-  public async indexByDocente(idDocente: number) {
+  public async indexByDocente(num_doc: number) {
     return await Database
     .from('evaluacion')
     .join('usuario_rol','evaluacion.usu_id','usuario_rol.usu_id')
@@ -42,7 +42,7 @@ export default class EvaluacionesController {
       'evaluacion.eva_resultado',
       'evaluacion.eva_puntaje'
     )
-    .where('usuario_rol.usu_id','=',idDocente)
+    .where('usuario_rol.usu_num_doc','=',num_doc)
   }
 
   public async indexByPeriodo(nombrePeriodo: string) {
@@ -149,6 +149,30 @@ export default class EvaluacionesController {
       'evaluacion.eva_puntaje'
     )
     .where('usuario_rol.usu_num_doc','=',num_doc)
+    .andWhere("evaluacion.eva_estado","like","En ejecución")
+  }
+
+  public async indexAllInactiveByDocente(num_doc: number){
+    return await Database
+    .from('evaluacion')
+    .join('usuario_rol','evaluacion.usu_id','usuario_rol.usu_id')
+    .join('usuario','usuario.usu_id','usuario_rol.usu_id')
+    .join('periodo','evaluacion.per_id','periodo.per_id')
+    .join('labor', 'evaluacion.lab_id','labor.lab_id')
+    .join('tipo_labor','labor.tl_id','tipo_labor.tl_id')
+    .select(
+      'labor.lab_nombre',
+      'tipo_labor.tl_descripcion',
+      'labor.lab_horas',
+      //CONSULTA PENDIENTE PARA LA DESCRIPCIÓN
+      'periodo.per_fecha_inicio',
+      'periodo.per_fecha_fin',
+      'evaluacion.eva_estado',
+      'evaluacion.eva_resultado',
+      'evaluacion.eva_puntaje'
+    )
+    .where('usuario_rol.usu_num_doc','=',num_doc)
+    .andWhere("evaluacion.eva_estado","like","Terminado")
   }
 
   public async store(evaluacion: Evaluacion) {

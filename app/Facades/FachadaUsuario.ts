@@ -149,7 +149,7 @@ export default class FachadaUsuario{
     return response.json(api.toResponse())
   }
 
-  public async eliminarPorNombre({request,response}: HttpContextContract){
+  public async eliminarPorNumDoc({request,response}: HttpContextContract){
     const api = new Api()
     const controladorUsuario = new UsuControlador()
     const usu_num_doc = request.input("num_doc")

@@ -26,9 +26,9 @@ export default class FachadaEvaluacion{
   public async listarEvaluacionesPorDocente({request, response}: HttpContextContract){
     const api = new Api()
     const evaControlador = new EvaControlador()
-    const idDocente = request.input("num_doc")
+    const num_doc = request.input("num_doc")
 
-    const results = await evaControlador.indexByDocente(idDocente)
+    const results = await evaControlador.indexByDocente(num_doc)
 
     if(results.length <= 0){
       api.setState(404,"Error","No hay evaluaciones de este profesor para listar")
@@ -98,9 +98,24 @@ export default class FachadaEvaluacion{
   public async listarEvaluacionesActivasDocente({request, response}: HttpContextContract){
     const api = new Api()
     const evaControlador = new EvaControlador()
-    const idDocente = request.input("num_doc")
+    const num_doc = request.input("num_doc")
 
-    const results = await evaControlador.indexAllActiveByDocente(idDocente)
+    const results = await evaControlador.indexAllActiveByDocente(num_doc)
+
+    if(results.length <= 0){
+      api.setState(404,"Error","No hay evaluaciones de este profesor para listar")
+    }else{
+      api.setResult(results)
+    }
+    return response.json(api.toResponse())
+  }
+
+  public async listarEvaluacionesInactivasDocente({request, response}: HttpContextContract){
+    const api = new Api()
+    const evaControlador = new EvaControlador()
+    const num_doc = request.input("num_doc")
+
+    const results = await evaControlador.indexAllInactiveByDocente(num_doc)
 
     if(results.length <= 0){
       api.setState(404,"Error","No hay evaluaciones de este profesor para listar")
@@ -206,7 +221,7 @@ export default class FachadaEvaluacion{
 
   public async eliminarEvaluacion({request, response}: HttpContextContract){
     const api = new Api()
-    const eva_id = request.param('id')
+    const eva_id = request.input('eva_id')
     const evaControlador = new EvaControlador()
 
     const result = await evaControlador.destroy(eva_id)

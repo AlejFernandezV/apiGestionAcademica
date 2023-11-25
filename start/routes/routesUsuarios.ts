@@ -20,4 +20,4 @@ Route.post('/usuarios/crear', fachadaUsuario.crearUsuario)
 Route.put('/usuarios/actualizar', fachadaUsuario.actualizarUsuario)
 
 //Peticiones DELETE
-Route.delete('/usuarios/eliminar', fachadaUsuario.eliminarPorNombre)
+Route.delete('/usuarios/eliminar', fachadaUsuario.eliminarPorNumDoc)
