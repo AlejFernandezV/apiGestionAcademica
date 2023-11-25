@@ -42,7 +42,7 @@ export default class EvaluacionesController {
       'evaluacion.eva_resultado',
       'evaluacion.eva_puntaje'
     )
-    .where('usuario_rol.usu_num_doc','=',num_doc)
+    .where('usuario.usu_num_doc','=',num_doc)
   }
 
   public async indexByPeriodo(nombrePeriodo: string) {
@@ -148,7 +148,7 @@ export default class EvaluacionesController {
       'evaluacion.eva_resultado',
       'evaluacion.eva_puntaje'
     )
-    .where('usuario_rol.usu_num_doc','=',num_doc)
+    .where('usuario.usu_num_doc','=',num_doc)
     .andWhere("evaluacion.eva_estado","like","En ejecución")
   }
 
@@ -171,7 +171,7 @@ export default class EvaluacionesController {
       'evaluacion.eva_resultado',
       'evaluacion.eva_puntaje'
     )
-    .where('usuario_rol.usu_num_doc','=',num_doc)
+    .where('usuario.usu_num_doc','=',num_doc)
     .andWhere("evaluacion.eva_estado","like","Terminado")
   }
 

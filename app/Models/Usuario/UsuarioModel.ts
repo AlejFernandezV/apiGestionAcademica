@@ -48,9 +48,9 @@ export default class Usuario extends BaseModel {
 
   @manyToMany(()=>Rol ,{
     pivotTable: 'usuario_rol',
-    localKey: 'id',
+    localKey: 'usu_id',
     pivotForeignKey: 'usu_id',
-    relatedKey: 'id',
+    relatedKey: 'rol_id',
     pivotRelatedForeignKey: 'rol_id',
   })
   public roles: ManyToMany<typeof Rol>
