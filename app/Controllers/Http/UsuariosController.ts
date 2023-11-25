@@ -66,10 +66,10 @@ export default class UsuariosController {
 
   }
 
-  public async findByNumDoc(parametros: any) {
+  public async findByNumDoc(num_doc: any) {
     return await Usuario.query()
     .select("usuario.usu_id",'usu_num_doc','usu_tipo_doc','usu_email','usu_nombre','usu_apellido','usu_genero','usu_estudio','usu_estado')
-    .where('usu_num_doc', parametros.num_doc)
+    .where('usu_num_doc', num_doc)
   }
 
   public async update(data: any) {

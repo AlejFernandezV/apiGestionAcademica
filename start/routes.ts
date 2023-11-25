@@ -26,6 +26,7 @@ import './routes/routesLabores'
 import './routes/routesPeriodos'
 import './routes/routesEvaluaciones'
 import './routes/routesDocumentos'
+import './routes/routesNotificaciones'
 
 
 Route.get('/', async () => {
