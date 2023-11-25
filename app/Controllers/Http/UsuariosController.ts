@@ -109,4 +109,14 @@ export default class UsuariosController {
       return {code:404 ,"Error: ":error}
     }
   }
+
+  public async updateRememberToken(data:any){
+    try{
+      const usuario = await Usuario.findByOrFail("usu_num_doc",data.usu_num_doc)
+      const result =await usuario.merge(data).save()
+      return {code:200, "result":result}
+    }catch(error){
+      return {code:404 ,"Error: ":error}
+    }
+  }
 }
