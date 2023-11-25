@@ -6,10 +6,10 @@ export default class EvaluacionesController {
   public async indexAll() {
     return await Database
     .from('evaluacion')
-    .join('usuario_rol','evaluacion.usu_id','usuario_rol.usu_id')
-    .join('periodo','evaluacion.per_id','periodo.per_id')
-    .join('labor', 'evaluacion.lab_id','labor.lab_id')
-    .join('tipo_labor','labor.tl_id','tipo_labor.tl_id')
+    .innerJoin('usuario_rol','evaluacion.usu_id','usuario_rol.usu_id')
+    .innerJoin('periodo','evaluacion.per_id','periodo.per_id')
+    .innerJoin('labor', 'evaluacion.lab_id','labor.lab_id')
+    .innerJoin('tipo_labor','labor.tl_id','tipo_labor.tl_id')
     .select(
       'labor.lab_nombre',
       'tipo_labor.tl_descripcion',
@@ -27,11 +27,11 @@ export default class EvaluacionesController {
   public async indexByDocente(num_doc: number) {
     return await Database
     .from('evaluacion')
-    .join('usuario_rol','evaluacion.usu_id','usuario_rol.usu_id')
-    .join('usuario','usuario_rol.usu_id','usuario.usu_id')
-    .join('periodo','evaluacion.per_id','periodo.per_id')
-    .join('labor', 'evaluacion.lab_id','labor.lab_id')
-    .join('tipo_labor','labor.tl_id','tipo_labor.tl_id')
+    .innerJoin('usuario_rol','evaluacion.usu_id','usuario_rol.usu_id')
+    .innerJoin('usuario','usuario_rol.usu_id','usuario.usu_id')
+    .innerJoin('periodo','evaluacion.per_id','periodo.per_id')
+    .innerJoin('labor', 'evaluacion.lab_id','labor.lab_id')
+    .innerJoin('tipo_labor','labor.tl_id','tipo_labor.tl_id')
     .select(
       'labor.lab_nombre',
       'tipo_labor.tl_descripcion',
@@ -49,10 +49,10 @@ export default class EvaluacionesController {
   public async indexByPeriodo(nombrePeriodo: string) {
     return await Database
     .from('evaluacion')
-    .join('usuario_rol','evaluacion.usu_id','usuario_rol.usu_id')
-    .join('periodo','evaluacion.per_id','periodo.per_id')
-    .join('labor', 'evaluacion.lab_id','labor.lab_id')
-    .join('tipo_labor','labor.tl_id','tipo_labor.tl_id')
+    .innerJoin('usuario_rol','evaluacion.usu_id','usuario_rol.usu_id')
+    .innerJoin('periodo','evaluacion.per_id','periodo.per_id')
+    .innerJoin('labor', 'evaluacion.lab_id','labor.lab_id')
+    .innerJoin('tipo_labor','labor.tl_id','tipo_labor.tl_id')
     .select(
       'labor.lab_nombre',
       'tipo_labor.tl_descripcion',
