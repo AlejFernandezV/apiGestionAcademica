@@ -207,7 +207,7 @@ export default class FachadaEvaluacion{
 
   public async actualizarResultado({request, response}: HttpContextContract){
     const api = new Api()
-    const data = request.only(['eva_id','eva_resultado','eva_puntuacion'])
+    const data = request.only(['eva_id','eva_resultado','eva_puntaje'])
     const evaControlador = new EvaControlador()
 
     const result = await evaControlador.updateResult(data)
