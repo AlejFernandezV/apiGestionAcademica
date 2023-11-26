@@ -70,6 +70,29 @@ export default class EvaluacionesController {
     .where('periodo.per_nombre','like',nombrePeriodo)
   }
 
+  public async indexByNumDocPeriodo(usu_num_doc:number,nombrePeriodo: string) {
+    return await Database
+    .from('evaluacion')
+    .innerJoin('usuario_rol','evaluacion.usu_id','usuario_rol.usu_id')
+    .innerJoin('periodo','evaluacion.per_id','periodo.per_id')
+    .innerJoin('labor', 'evaluacion.lab_id','labor.lab_id')
+    .innerJoin('tipo_labor','labor.tl_id','tipo_labor.tl_id')
+    .select(
+      "eva_id",
+      'labor.lab_nombre',
+      'tipo_labor.tl_descripcion',
+      'labor.lab_horas',
+      //CONSULTA PENDIENTE PARA LA DESCRIPCIÓN
+      'periodo.per_fecha_inicio',
+      'periodo.per_fecha_fin',
+      'evaluacion.eva_estado',
+      'evaluacion.eva_resultado',
+      'evaluacion.eva_puntaje'
+    )
+    .where('usuario.usu_num_doc','=',usu_num_doc)
+    .andWhere('periodo.per_nombre','like',nombrePeriodo)
+  }
+
   public async indexAllActive() {
     return await Database
     .from('evaluacion')
