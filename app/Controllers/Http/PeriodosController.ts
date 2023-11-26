@@ -13,7 +13,7 @@ export default class PeriodosController {
     return await Periodo
     .query()
     .from('periodo')
-    .select('per_nombre')
+    .select('per_id','per_nombre','per_fecha_inicio','per_fecha_fin')
     .orderBy('per_id')
   }
 

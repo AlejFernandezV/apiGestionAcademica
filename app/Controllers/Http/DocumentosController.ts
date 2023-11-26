@@ -6,7 +6,8 @@ import Doc from 'App/Models/Documento/DocumentoModel'
 
 export default class DocumentosController {
   public async uploadFiles({ request, response }: HttpContextContract) {
-    const { usu_num_doc, eva_id } = request.qs()
+    const usu_num_doc = request.input("num_doc")
+    const eva_id = request.input("eva_id")
 
     const api = new Api()
     const ruta: string = Path.join(process.cwd(), "documents")

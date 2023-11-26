@@ -11,6 +11,7 @@ export default class EvaluacionesController {
     .innerJoin('labor', 'evaluacion.lab_id','labor.lab_id')
     .innerJoin('tipo_labor','labor.tl_id','tipo_labor.tl_id')
     .select(
+      "eva_id",
       'labor.lab_nombre',
       'tipo_labor.tl_descripcion',
       'labor.lab_horas',
@@ -33,6 +34,7 @@ export default class EvaluacionesController {
     .innerJoin('labor', 'evaluacion.lab_id','labor.lab_id')
     .innerJoin('tipo_labor','labor.tl_id','tipo_labor.tl_id')
     .select(
+      "eva_id",
       'labor.lab_nombre',
       'tipo_labor.tl_descripcion',
       'labor.lab_horas',
@@ -54,6 +56,7 @@ export default class EvaluacionesController {
     .innerJoin('labor', 'evaluacion.lab_id','labor.lab_id')
     .innerJoin('tipo_labor','labor.tl_id','tipo_labor.tl_id')
     .select(
+      "eva_id",
       'labor.lab_nombre',
       'tipo_labor.tl_descripcion',
       'labor.lab_horas',
@@ -75,6 +78,7 @@ export default class EvaluacionesController {
     .join('labor', 'evaluacion.lab_id','labor.lab_id')
     .join('tipo_labor','labor.tl_id','tipo_labor.tl_id')
     .select(
+      "eva_id",
       'labor.lab_nombre',
       'tipo_labor.tl_descripcion',
       'labor.lab_horas',
@@ -96,6 +100,7 @@ export default class EvaluacionesController {
     .join('labor', 'evaluacion.lab_id','labor.lab_id')
     .join('tipo_labor','labor.tl_id','tipo_labor.tl_id')
     .select(
+      "eva_id",
       'labor.lab_nombre',
       'tipo_labor.tl_descripcion',
       'labor.lab_horas',
@@ -117,6 +122,7 @@ export default class EvaluacionesController {
     .join('labor', 'evaluacion.lab_id','labor.lab_id')
     .join('tipo_labor','labor.tl_id','tipo_labor.tl_id')
     .select(
+      "eva_id",
       'labor.lab_nombre',
       'tipo_labor.tl_descripcion',
       'labor.lab_horas',
@@ -139,6 +145,7 @@ export default class EvaluacionesController {
     .join('labor', 'evaluacion.lab_id','labor.lab_id')
     .join('tipo_labor','labor.tl_id','tipo_labor.tl_id')
     .select(
+      "eva_id",
       'labor.lab_nombre',
       'tipo_labor.tl_descripcion',
       'labor.lab_horas',
@@ -162,6 +169,7 @@ export default class EvaluacionesController {
     .join('labor', 'evaluacion.lab_id','labor.lab_id')
     .join('tipo_labor','labor.tl_id','tipo_labor.tl_id')
     .select(
+      "eva_id",
       'labor.lab_nombre',
       'tipo_labor.tl_descripcion',
       'labor.lab_horas',
