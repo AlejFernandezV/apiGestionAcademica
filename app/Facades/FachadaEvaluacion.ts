@@ -53,6 +53,22 @@ export default class FachadaEvaluacion{
     return response.json(api.toResponse())
   }
 
+  public async listarEvaluacionesPorNumDocYPeriodo({request, response}: HttpContextContract){
+    const api = new Api()
+    const evaControlador = new EvaControlador()
+    const periodoNombre = request.input("per_nombre")
+    const usuarioNumDoc = request.input("num_doc")
+
+    const results = await evaControlador.indexByNumDocPeriodo(usuarioNumDoc,periodoNombre)
+
+    if(results.length <= 0){
+      api.setState(404,"Error","No hay evaluaciones en este periodo para listar")
+    }else{
+      api.setResult(results)
+    }
+    return response.json(api.toResponse())
+  }
+
   public async listarEvaluacionesActivas({response}: HttpContextContract){
     const api = new Api()
     const evaControlador = new EvaControlador()
