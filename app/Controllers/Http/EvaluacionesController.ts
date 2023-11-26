@@ -74,6 +74,7 @@ export default class EvaluacionesController {
     return await Database
     .from('evaluacion')
     .innerJoin('usuario_rol','evaluacion.usu_id','usuario_rol.usu_id')
+    .innerJoin('usuario','usuario.usu_id','usuario_rol.usu_id')
     .innerJoin('periodo','evaluacion.per_id','periodo.per_id')
     .innerJoin('labor', 'evaluacion.lab_id','labor.lab_id')
     .innerJoin('tipo_labor','labor.tl_id','tipo_labor.tl_id')
