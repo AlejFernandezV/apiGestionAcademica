@@ -24,10 +24,16 @@ export default class NotificacionesController {
 
   public async crearNotificacion({request,response}:HttpContextContract){
     const api = new Api()
-    const data = request.only(["usu_id","noti_content","noti_ruta","noti_estado"])
+    const data = request.only(["usu_id","noti_contenido","noti_ruta","noti_estado"])
+
+    const noti = new NotificacionModel()
+    noti.usu_id = data.usu_id
+    noti.noti_contenido = data.noti_contenido
+    noti.noti_ruta = data.noti_ruta
+    noti.noti_estado = data.noti_estado
 
     try{
-      const result = await NotificacionModel.create(data)
+      const result = await NotificacionModel.create(noti)
       api.setResult(result)
     }catch(error){
       console.log();
