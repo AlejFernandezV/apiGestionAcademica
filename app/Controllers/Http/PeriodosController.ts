@@ -37,7 +37,7 @@ export default class PeriodosController {
 
   public async update(data:any) {
     try{
-      const periodo = await Periodo.findOrFail(data.per_id)
+      const periodo = await Periodo.findByOrFail("per_nombre",data.per_nombre);
       return await periodo.merge(data).save()
     }catch(error){
       console.log(error);
