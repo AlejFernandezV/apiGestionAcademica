@@ -13,7 +13,7 @@ export default class LaboresController {
   public async indexAllNamesTL(){
     return await TipoLabor
     .query()
-    .select('tl_descripcion')
+    .select('tl_id','tl_descripcion')
     .orderBy('tl_id')
   }
 
