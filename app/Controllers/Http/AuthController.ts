@@ -26,6 +26,9 @@ export default class AuthController {
         .where("usu_email", data.usu_email)
         .firstOrFail();
 
+      console.log("Login result: ",loginResult);
+
+
       if (!(await Hash.verify(loginResult.usu_password, data.usu_password))) {
         api.setState(
           404,
@@ -37,6 +40,8 @@ export default class AuthController {
 
       token = await this.verifyTokenExists(loginResult.usu_id)
 
+      console.log("Token verificado si existe es igual a ",token);
+
       if (token === null) {
         token = await auth
           .use("api")
@@ -47,6 +52,8 @@ export default class AuthController {
           .use("api")
           .generate(loginResult, { expiresIn: "1 days" })
       }
+
+      console.log("Token generado:",token);
 
       this.updateRememberUserToken(loginResult.usu_id,token.token)
       const valueToken = await usuController.getRememberToken(loginResult.usu_id)
@@ -60,6 +67,8 @@ export default class AuthController {
           expires_at: token.expires_at
         }
       }
+
+      console.log("resultados:",results);
 
       api.setResult(results);
     } catch (error) {
