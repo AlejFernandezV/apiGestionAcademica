@@ -4,7 +4,7 @@ import Usuario from "../Usuario/UsuarioModel"
 
 export default class NotificacionModel extends BaseModel {
 
-  public static table = 'notificacion'
+  public static table = 'notificaciones'
 
   @column({columnName:"noti_id"})
   public noti_id: number
