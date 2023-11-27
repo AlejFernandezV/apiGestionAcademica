@@ -74,7 +74,7 @@ export default class FachadaPeriodo{
   public async actualizarPeriodo({request,response}: HttpContextContract){
     const api = new Api()
     const perControlador = new PerControlador()
-    const data = request.only(['per_nombre','per_anio','per_semestre','per_fecha_inicio', 'per_fecha_fin'])
+    const data = request.only(['per_nombre_old','per_nombre','per_anio','per_semestre','per_fecha_inicio', 'per_fecha_fin'])
 
     const result = await perControlador.update(data)
 
