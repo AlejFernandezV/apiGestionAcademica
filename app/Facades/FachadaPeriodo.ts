@@ -78,7 +78,7 @@ export default class FachadaPeriodo{
 
     const newData = {
       per_nombre: data.per_nombre,
-      per_ani: data.per_anio,
+      per_anio: data.per_anio,
       per_semestre: data.per_semestre,
       per_fecha_inicio: data.per_fecha_inicio,
       per_fecha_fin: data.per_fecha_fin
