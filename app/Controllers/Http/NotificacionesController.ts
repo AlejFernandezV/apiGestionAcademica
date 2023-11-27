@@ -11,8 +11,9 @@ export default class NotificacionesController {
 
     const results = await Database
     .from('notificaciones')
-    .select("noti_id","usu_id","noti_contenido","noti_ruta","noti_estado")
-    .where("usu_id",usu_id)
+    .innerJoin('usuario','usuario.usu_id','notificaciones.usu_id')
+    .select("notificaciones.noti_id","usuario.usu_id","notificaciones.noti_contenido","notificaciones.noti_ruta","notificaciones.noti_estado")
+    .where("usuario.usu_num_doc",'=',usu_id)
 
     if(results.length <= 0){
       api.setState(404,"Error","No hay notificaciones para listar")
