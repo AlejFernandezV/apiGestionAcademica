@@ -48,6 +48,26 @@ export default class EvaluacionesController {
     .where('usuario.usu_num_doc','=',num_doc)
   }
 
+  public async indexById(eva_id: number) {
+    return await Database
+    .from('evaluacion')
+    .innerJoin('usuario_rol','evaluacion.usu_id','usuario_rol.usu_id')
+    .innerJoin('usuario','usuario_rol.usu_id','usuario.usu_id')
+    .innerJoin('periodo','evaluacion.per_id','periodo.per_id')
+    .innerJoin('labor', 'evaluacion.lab_id','labor.lab_id')
+    .innerJoin('tipo_labor','labor.tl_id','tipo_labor.tl_id')
+    .select(
+      'eva_id',
+      'usuario.usu_id',
+      'evaluacion.eva_estado',
+      'evaluacion.eva_resultado',
+      'evaluacion.eva_puntaje',
+      'evaluacion.updated_at'
+    )
+    .where('evaluacion.eva_id','=',eva_id)
+    .firstOrFail()
+  }
+
   public async indexByPeriodo(nombrePeriodo: string) {
     return await Database
     .from('evaluacion')
