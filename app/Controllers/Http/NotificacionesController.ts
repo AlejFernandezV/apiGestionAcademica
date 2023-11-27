@@ -37,7 +37,7 @@ export default class NotificacionesController {
       api.setResult(result)
     }catch(error){
       console.log();
-      api.setState(404,"Error","Error al crear la notificación")
+      api.setState(404,"Error",error)
     }finally{
       return response.json(api.toResponse())
     }
