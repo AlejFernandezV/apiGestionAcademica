@@ -10,11 +10,11 @@ export default class NotificacionesController {
     const usu_id = request.input("usu_id")
 
     const results = await Database
-    .from('')
-    .select("noti_id","usu_id","noti_content","noti_ruta","noti_estado")
+    .from('notificaciones')
+    .select("noti_id","usu_id","noti_contenido","noti_ruta","noti_estado")
     .where("usu_id",usu_id)
 
-    if(results.length < 0){
+    if(results.length <= 0){
       api.setState(404,"Error","No hay notificaciones para listar")
     }else{
       api.setResult(results)
