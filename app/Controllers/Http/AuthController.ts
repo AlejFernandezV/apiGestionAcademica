@@ -78,6 +78,7 @@ export default class AuthController {
         .firstOrFail();
 
       const foundToken = {
+        token: tokenResult.token,
         expires_at: tokenResult.expires_at,
       }
       return foundToken;
