@@ -76,7 +76,15 @@ export default class FachadaPeriodo{
     const perControlador = new PerControlador()
     const data = request.only(['per_nombre_old','per_nombre','per_anio','per_semestre','per_fecha_inicio', 'per_fecha_fin'])
 
-    const result = await perControlador.update(data)
+    const newData = {
+      per_nombre: data.per_nombre,
+      per_ani: data.per_anio,
+      per_semestre: data.per_semestre,
+      per_fecha_inicio: data.per_fecha_inicio,
+      per_fecha_fin: data.per_fecha_fin
+    }
+
+    const result = await perControlador.update(data.per_nombre_old,newData)
 
     if(result === 404){
       api.setState(404,"Error","No se pudo actualizar el periodo académico")
