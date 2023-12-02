@@ -14,6 +14,7 @@ export default class EvaluacionesController {
     .innerJoin('tipo_labor','labor.tl_id','tipo_labor.tl_id')
     .select(
       'eva_id',
+      'perido.per_nombre',
       'usuario.usu_nombre',
       'usuario.usu_apellido',
       'labor.lab_nombre',
@@ -26,7 +27,7 @@ export default class EvaluacionesController {
       'evaluacion.eva_puntaje'
     )
     .where('rol.rol_id','=','5')
-    .orderBy('usuario.usuario.usu_nombre')
+    .orderBy('usuario.usu_nombre')
   }
 
   public async indexAllForCoord() {
@@ -40,6 +41,7 @@ export default class EvaluacionesController {
     .innerJoin('tipo_labor','labor.tl_id','tipo_labor.tl_id')
     .select(
       'eva_id',
+      'perido.per_nombre',
       'usuario.usu_nombre',
       'usuario.usu_apellido',
       'labor.lab_nombre',
@@ -53,7 +55,7 @@ export default class EvaluacionesController {
     )
     .where('rol.rol_id','!=','6')
     .andWhere('rol.rol_id','!=','5')
-    .orderBy('usuario.usuario.usu_nombre')
+    .orderBy('usuario.usu_nombre')
   }
 
   public async indexByDocente(num_doc: number) {
