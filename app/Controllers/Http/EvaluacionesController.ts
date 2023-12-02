@@ -62,7 +62,7 @@ export default class EvaluacionesController {
     .orderBy('labor.lab_horas','asc')
   }
 
-  public async indexByDocente(nombre: string, apellido:string) {
+  public async indexByDocenteNombApel(nombre: string, apellido:string) {
     return await Database
     .from('evaluacion')
     .innerJoin('usuario_rol','evaluacion.usu_id','usuario_rol.usu_id')
@@ -82,8 +82,33 @@ export default class EvaluacionesController {
       'evaluacion.eva_resultado',
       'evaluacion.eva_puntaje'
     )
-    .where('usuario.usu_nombre','=',nombre)
-    .andWhere('usuario.usu_apellido','=',apellido)
+    .where('usuario.usu_nombre','like',nombre)
+    .andWhere('usuario.usu_apellido','like',apellido)
+    .orderBy('periodo.per_nombre','asc')
+    .orderBy('labor.lab_horas','asc')
+  }
+
+  public async indexByDocenteNumDoc(num_doc:number) {
+    return await Database
+    .from('evaluacion')
+    .innerJoin('usuario_rol','evaluacion.usu_id','usuario_rol.usu_id')
+    .innerJoin('usuario','usuario_rol.usu_id','usuario.usu_id')
+    .innerJoin('periodo','evaluacion.per_id','periodo.per_id')
+    .innerJoin('labor', 'evaluacion.lab_id','labor.lab_id')
+    .innerJoin('tipo_labor','labor.tl_id','tipo_labor.tl_id')
+    .select(
+      'eva_id',
+      'periodo.per_nombre',
+      'labor.lab_nombre',
+      'tipo_labor.tl_descripcion',
+      'labor.lab_horas',
+      'periodo.per_fecha_inicio',
+      'periodo.per_fecha_fin',
+      'evaluacion.eva_estado',
+      'evaluacion.eva_resultado',
+      'evaluacion.eva_puntaje'
+    )
+    .where('usuario.usu_num_doc','=',num_doc)
     .orderBy('periodo.per_nombre','asc')
     .orderBy('labor.lab_horas','asc')
   }

@@ -6,8 +6,8 @@ const fachadaEva = new FachadaEvaluacion()
 //Peticiones GET
 Route.get('/evaluaciones/listar_pd', fachadaEva.listarEvaluacionesParaDecano)
 Route.get('/evaluaciones/listar_pc', fachadaEva.listarEvaluacionesParaCoord)
-
-Route.get('/evaluaciones/listar_por_docente', fachadaEva.listarEvaluacionesPorDocente)
+Route.get('/evaluaciones/listar_por_docente_nomb_apel', fachadaEva.listarEvaluacionesPorDocenteNombApel)
+Route.get('/evaluaciones/listar_por_docente_num_doc', fachadaEva.listarEvaluacionesPorDocenteNumDoc)
 Route.get('/evaluaciones/listar_por_periodo', fachadaEva.listarEvaluacionesPorPeriodo)
 Route.get('/evaluaciones/listar_por_periodo_num_doc', fachadaEva.listarEvaluacionesPorNumDocYPeriodo)
 Route.get('/evaluaciones/listar_por_id', fachadaEva.listarEvaluacionesId)
