@@ -37,13 +37,28 @@ export default class FachadaEvaluacion{
     return response.json(api.toResponse())
   }
 
-  public async listarEvaluacionesPorDocente({request, response}: HttpContextContract){
+  public async listarEvaluacionesPorDocenteNumDoc({request, response}: HttpContextContract){
+    const api = new Api()
+    const evaControlador = new EvaControlador()
+    const num_doc = request.input("num_doc")
+
+    const results = await evaControlador.indexByDocenteNumDoc(num_doc)
+
+    if(results.length <= 0){
+      api.setState(404,"Error","No hay evaluaciones de este profesor para listar")
+    }else{
+      api.setResult(results)
+    }
+    return response.json(api.toResponse())
+  }
+
+  public async listarEvaluacionesPorDocenteNombApel({request, response}: HttpContextContract){
     const api = new Api()
     const evaControlador = new EvaControlador()
     const nombre = request.input("nombre")
     const apellido = request.input("apellido")
 
-    const results = await evaControlador.indexByDocente(nombre,apellido)
+    const results = await evaControlador.indexByDocenteNombApel(nombre,apellido)
 
     if(results.length <= 0){
       api.setState(404,"Error","No hay evaluaciones de este profesor para listar")
