@@ -9,11 +9,25 @@ import Mail from '@ioc:Adonis/Addons/Mail'
 import Usuario from 'App/Models/Usuario/UsuarioModel'
 
 export default class FachadaEvaluacion{
-  public async listarEvaluaciones({response}: HttpContextContract){
+  public async listarEvaluacionesParaDecano({response}: HttpContextContract){
     const api = new Api()
     const evaControlador = new EvaControlador()
 
-    const results = await evaControlador.indexAll()
+    const results = await evaControlador.indexAllForDean()
+
+    if(results.length <= 0){
+      api.setState(404,"Error","No hay evaluaciones para listar")
+    }else{
+      api.setResult(results)
+    }
+    return response.json(api.toResponse())
+  }
+
+  public async listarEvaluacionesParaCoord({response}: HttpContextContract){
+    const api = new Api()
+    const evaControlador = new EvaControlador()
+
+    const results = await evaControlador.indexAllForCoord()
 
     if(results.length <= 0){
       api.setState(404,"Error","No hay evaluaciones para listar")

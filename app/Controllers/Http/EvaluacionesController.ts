@@ -3,26 +3,57 @@ import Evaluacion from 'App/Models/Evaluacion/EvaluacionModel'
 
 export default class EvaluacionesController {
 
-  public async indexAll() {
+  public async indexAllForDean() {
     return await Database
     .from('evaluacion')
     .innerJoin('usuario_rol','evaluacion.usu_id','usuario_rol.usu_id')
+    .innerJoin('usuario','usuario_rol.usu_id','usuario.usu_id')
+    .innerJoin('rol','usuario_rol.rol_id','rol.rol_id')
     .innerJoin('periodo','evaluacion.per_id','periodo.per_id')
     .innerJoin('labor', 'evaluacion.lab_id','labor.lab_id')
     .innerJoin('tipo_labor','labor.tl_id','tipo_labor.tl_id')
     .select(
-      "eva_id",
+      'eva_id',
+      'usuario.usu_nombre',
+      'usuario.usu_apellido',
       'labor.lab_nombre',
       'tipo_labor.tl_descripcion',
       'labor.lab_horas',
-      //CONSULTA PENDIENTE PARA LA DESCRIPCIÓN
       'periodo.per_fecha_inicio',
       'periodo.per_fecha_fin',
       'evaluacion.eva_estado',
       'evaluacion.eva_resultado',
       'evaluacion.eva_puntaje'
     )
+    .where('rol.rol_id','=','5')
+    .orderBy('usuario.usuario.usu_nombre')
+  }
 
+  public async indexAllForCoord() {
+    return await Database
+    .from('evaluacion')
+    .innerJoin('usuario_rol','evaluacion.usu_id','usuario_rol.usu_id')
+    .innerJoin('usuario','usuario_rol.usu_id','usuario.usu_id')
+    .innerJoin('rol','usuario_rol.rol_id','rol.rol_id')
+    .innerJoin('periodo','evaluacion.per_id','periodo.per_id')
+    .innerJoin('labor', 'evaluacion.lab_id','labor.lab_id')
+    .innerJoin('tipo_labor','labor.tl_id','tipo_labor.tl_id')
+    .select(
+      'eva_id',
+      'usuario.usu_nombre',
+      'usuario.usu_apellido',
+      'labor.lab_nombre',
+      'tipo_labor.tl_descripcion',
+      'labor.lab_horas',
+      'periodo.per_fecha_inicio',
+      'periodo.per_fecha_fin',
+      'evaluacion.eva_estado',
+      'evaluacion.eva_resultado',
+      'evaluacion.eva_puntaje'
+    )
+    .where('rol.rol_id','!=','6')
+    .andWhere('rol.rol_id','!=','5')
+    .orderBy('usuario.usuario.usu_nombre')
   }
 
   public async indexByDocente(num_doc: number) {
