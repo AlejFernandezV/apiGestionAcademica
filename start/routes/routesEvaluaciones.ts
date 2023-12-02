@@ -4,7 +4,9 @@ import FachadaEvaluacion from 'App/Facades/FachadaEvaluacion'
 const fachadaEva = new FachadaEvaluacion()
 
 //Peticiones GET
-Route.get('/evaluaciones/listar', fachadaEva.listarEvaluaciones)
+Route.get('/evaluaciones/listar_pd', fachadaEva.listarEvaluacionesParaDecano)
+Route.get('/evaluaciones/listar_pc', fachadaEva.listarEvaluacionesParaCoord)
+
 Route.get('/evaluaciones/listar_por_docente', fachadaEva.listarEvaluacionesPorDocente)
 Route.get('/evaluaciones/listar_por_periodo', fachadaEva.listarEvaluacionesPorPeriodo)
 Route.get('/evaluaciones/listar_por_periodo_num_doc', fachadaEva.listarEvaluacionesPorNumDocYPeriodo)
