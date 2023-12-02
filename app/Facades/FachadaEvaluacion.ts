@@ -40,9 +40,10 @@ export default class FachadaEvaluacion{
   public async listarEvaluacionesPorDocente({request, response}: HttpContextContract){
     const api = new Api()
     const evaControlador = new EvaControlador()
-    const num_doc = request.input("num_doc")
+    const nombre = request.input("nombre")
+    const apellido = request.input("apellido")
 
-    const results = await evaControlador.indexByDocente(num_doc)
+    const results = await evaControlador.indexByDocente(nombre,apellido)
 
     if(results.length <= 0){
       api.setState(404,"Error","No hay evaluaciones de este profesor para listar")

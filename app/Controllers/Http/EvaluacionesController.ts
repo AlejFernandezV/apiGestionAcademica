@@ -27,7 +27,9 @@ export default class EvaluacionesController {
       'evaluacion.eva_puntaje'
     )
     .where('rol.rol_id','=','5')
-    .orderBy('usuario.usu_nombre')
+    .orderBy('usuario.usu_nombre','asc')
+    .orderBy('periodo.per_nombre','asc')
+    .orderBy('labor.lab_horas','asc')
   }
 
   public async indexAllForCoord() {
@@ -55,10 +57,12 @@ export default class EvaluacionesController {
     )
     .where('rol.rol_id','!=','6')
     .andWhere('rol.rol_id','!=','5')
-    .orderBy('usuario.usu_nombre')
+    .orderBy('usuario.usu_nombre','asc')
+    .orderBy('periodo.per_nombre','asc')
+    .orderBy('labor.lab_horas','asc')
   }
 
-  public async indexByDocente(num_doc: number) {
+  public async indexByDocente(nombre: string, apellido:string) {
     return await Database
     .from('evaluacion')
     .innerJoin('usuario_rol','evaluacion.usu_id','usuario_rol.usu_id')
@@ -67,18 +71,21 @@ export default class EvaluacionesController {
     .innerJoin('labor', 'evaluacion.lab_id','labor.lab_id')
     .innerJoin('tipo_labor','labor.tl_id','tipo_labor.tl_id')
     .select(
-      "eva_id",
+      'eva_id',
+      'periodo.per_nombre',
       'labor.lab_nombre',
       'tipo_labor.tl_descripcion',
       'labor.lab_horas',
-      //CONSULTA PENDIENTE PARA LA DESCRIPCIÓN
       'periodo.per_fecha_inicio',
       'periodo.per_fecha_fin',
       'evaluacion.eva_estado',
       'evaluacion.eva_resultado',
       'evaluacion.eva_puntaje'
     )
-    .where('usuario.usu_num_doc','=',num_doc)
+    .where('usuario.usu_nombre','=',nombre)
+    .andWhere('usuario.usu_apellido','=',apellido)
+    .orderBy('periodo.per_nombre','asc')
+    .orderBy('labor.lab_horas','asc')
   }
 
   public async indexById(eva_id: number) {
@@ -109,11 +116,11 @@ export default class EvaluacionesController {
     .innerJoin('labor', 'evaluacion.lab_id','labor.lab_id')
     .innerJoin('tipo_labor','labor.tl_id','tipo_labor.tl_id')
     .select(
-      "eva_id",
+      'eva_id',
+      'periodo.per_nombre',
       'labor.lab_nombre',
       'tipo_labor.tl_descripcion',
       'labor.lab_horas',
-      //CONSULTA PENDIENTE PARA LA DESCRIPCIÓN
       'periodo.per_fecha_inicio',
       'periodo.per_fecha_fin',
       'evaluacion.eva_estado',
