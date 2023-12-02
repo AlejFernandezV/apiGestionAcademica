@@ -14,7 +14,7 @@ export default class EvaluacionesController {
     .innerJoin('tipo_labor','labor.tl_id','tipo_labor.tl_id')
     .select(
       'eva_id',
-      'perido.per_nombre',
+      'periodo.per_nombre',
       'usuario.usu_nombre',
       'usuario.usu_apellido',
       'labor.lab_nombre',
@@ -41,7 +41,7 @@ export default class EvaluacionesController {
     .innerJoin('tipo_labor','labor.tl_id','tipo_labor.tl_id')
     .select(
       'eva_id',
-      'perido.per_nombre',
+      'periodo.per_nombre',
       'usuario.usu_nombre',
       'usuario.usu_apellido',
       'labor.lab_nombre',
