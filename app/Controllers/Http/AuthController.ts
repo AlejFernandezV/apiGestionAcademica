@@ -14,20 +14,17 @@ export default class AuthController {
       let token: any;
 
       const loginResult = await Database.from("usuario")
-        .select(
-          "usuario.usu_id",
-          "usuario.usu_num_doc",
-          "usu_token_remember",
-          "usuario.usu_password",
-          "rol.rol_descripcion"
-        )
-        .join("usuario_rol", "usuario.usu_id", "usuario_rol.usu_id")
-        .join("rol", "usuario_rol.rol_id", "rol.rol_id")
-        .where("usu_email", data.usu_email)
-        .firstOrFail();
-
-      console.log("Login result: ",loginResult);
-
+      .select(
+        "usuario.usu_id",
+        "usuario.usu_num_doc",
+        "usu_token_remember",
+        "usuario.usu_password",
+        "rol.rol_descripcion"
+      )
+      .join("usuario_rol", "usuario.usu_id", "usuario_rol.usu_id")
+      .join("rol", "usuario_rol.rol_id", "rol.rol_id")
+      .where("usu_email", data.usu_email)
+      .firstOrFail();
 
       if (!(await Hash.verify(loginResult.usu_password, data.usu_password))) {
         api.setState(
@@ -40,8 +37,6 @@ export default class AuthController {
 
       token = await this.verifyTokenExists(loginResult.usu_id)
 
-      console.log("Token verificado si existe es igual a ",token);
-
       if (token === null) {
         token = await auth
           .use("api")
@@ -52,8 +47,6 @@ export default class AuthController {
           .use("api")
           .generate(loginResult, { expiresIn: "1 days" })
       }
-
-      console.log("Token generado:",token);
 
       this.updateRememberUserToken(loginResult.usu_id,token.token)
       const valueToken = await usuController.getRememberToken(loginResult.usu_id)
@@ -67,8 +60,6 @@ export default class AuthController {
           expires_at: token.expires_at
         }
       }
-
-      console.log("resultados:",results);
 
       api.setResult(results);
     } catch (error) {
