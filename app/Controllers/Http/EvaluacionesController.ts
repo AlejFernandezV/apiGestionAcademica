@@ -29,6 +29,7 @@ export default class EvaluacionesController {
     .where('rol.rol_id','=','5')
     .orderBy('usuario.usu_nombre','asc')
     .orderBy('periodo.per_nombre','asc')
+    .orderBy('labor.lab_nombre','asc')
     .orderBy('labor.lab_horas','asc')
   }
 
@@ -59,6 +60,7 @@ export default class EvaluacionesController {
     .andWhere('rol.rol_id','!=','5')
     .orderBy('usuario.usu_nombre','asc')
     .orderBy('periodo.per_nombre','asc')
+    .orderBy('labor.lab_nombre','asc')
     .orderBy('labor.lab_horas','asc')
   }
 
@@ -85,6 +87,7 @@ export default class EvaluacionesController {
     .where('usuario.usu_nombre','like',nombre)
     .andWhere('usuario.usu_apellido','like',apellido)
     .orderBy('periodo.per_nombre','asc')
+    .orderBy('labor.lab_nombre','asc')
     .orderBy('labor.lab_horas','asc')
   }
 
@@ -110,6 +113,7 @@ export default class EvaluacionesController {
     )
     .where('usuario.usu_num_doc','=',num_doc)
     .orderBy('periodo.per_nombre','asc')
+    .orderBy('labor.lab_nombre','asc')
     .orderBy('labor.lab_horas','asc')
   }
 
@@ -153,6 +157,8 @@ export default class EvaluacionesController {
       'evaluacion.eva_puntaje'
     )
     .where('periodo.per_nombre','like',nombrePeriodo)
+    .orderBy('labor.lab_nombre','asc')
+    .orderBy('labor.lab_horas','asc')
   }
 
   public async indexByNumDocPeriodo(usu_num_doc:number,nombrePeriodo: string) {
@@ -164,11 +170,11 @@ export default class EvaluacionesController {
     .innerJoin('labor', 'evaluacion.lab_id','labor.lab_id')
     .innerJoin('tipo_labor','labor.tl_id','tipo_labor.tl_id')
     .select(
-      "eva_id",
+      'eva_id',
+      'periodo.per_nombre',
       'labor.lab_nombre',
       'tipo_labor.tl_descripcion',
       'labor.lab_horas',
-      //CONSULTA PENDIENTE PARA LA DESCRIPCIÓN
       'periodo.per_fecha_inicio',
       'periodo.per_fecha_fin',
       'evaluacion.eva_estado',
@@ -177,6 +183,9 @@ export default class EvaluacionesController {
     )
     .where('usuario.usu_num_doc','=',usu_num_doc)
     .andWhere('periodo.per_nombre','like',nombrePeriodo)
+    .orderBy('periodo.per_nombre','asc')
+    .orderBy('labor.lab_nombre','asc')
+    .orderBy('labor.lab_horas','asc')
   }
 
   public async indexAllActive() {
@@ -187,11 +196,11 @@ export default class EvaluacionesController {
     .join('labor', 'evaluacion.lab_id','labor.lab_id')
     .join('tipo_labor','labor.tl_id','tipo_labor.tl_id')
     .select(
-      "eva_id",
+      'eva_id',
+      'periodo.per_nombre',
       'labor.lab_nombre',
       'tipo_labor.tl_descripcion',
       'labor.lab_horas',
-      //CONSULTA PENDIENTE PARA LA DESCRIPCIÓN
       'periodo.per_fecha_inicio',
       'periodo.per_fecha_fin',
       'evaluacion.eva_estado',
@@ -199,6 +208,10 @@ export default class EvaluacionesController {
       'evaluacion.eva_puntaje'
     )
     .where('eva_estado','like','En ejecución')
+    .orderBy('usuario.usu_nombre','asc')
+    .orderBy('periodo.per_nombre','asc')
+    .orderBy('labor.lab_nombre','asc')
+    .orderBy('labor.lab_horas','asc')
   }
 
   public async indexAllInactive() {
@@ -209,11 +222,11 @@ export default class EvaluacionesController {
     .join('labor', 'evaluacion.lab_id','labor.lab_id')
     .join('tipo_labor','labor.tl_id','tipo_labor.tl_id')
     .select(
-      "eva_id",
+      'eva_id',
+      'periodo.per_nombre',
       'labor.lab_nombre',
       'tipo_labor.tl_descripcion',
       'labor.lab_horas',
-      //CONSULTA PENDIENTE PARA LA DESCRIPCIÓN
       'periodo.per_fecha_inicio',
       'periodo.per_fecha_fin',
       'evaluacion.eva_estado',
@@ -221,6 +234,10 @@ export default class EvaluacionesController {
       'evaluacion.eva_puntaje'
     )
     .where('eva_estado','like','Suspendido')
+    .orderBy('usuario.usu_nombre','asc')
+    .orderBy('periodo.per_nombre','asc')
+    .orderBy('labor.lab_nombre','asc')
+    .orderBy('labor.lab_horas','asc')
   }
 
   public async indexAllFinished() {
@@ -231,11 +248,11 @@ export default class EvaluacionesController {
     .join('labor', 'evaluacion.lab_id','labor.lab_id')
     .join('tipo_labor','labor.tl_id','tipo_labor.tl_id')
     .select(
-      "eva_id",
+      'eva_id',
+      'periodo.per_nombre',
       'labor.lab_nombre',
       'tipo_labor.tl_descripcion',
       'labor.lab_horas',
-      //CONSULTA PENDIENTE PARA LA DESCRIPCIÓN
       'periodo.per_fecha_inicio',
       'periodo.per_fecha_fin',
       'evaluacion.eva_estado',
@@ -243,6 +260,10 @@ export default class EvaluacionesController {
       'evaluacion.eva_puntaje'
     )
     .where('eva_estado','like','Terminado')
+    .orderBy('usuario.usu_nombre','asc')
+    .orderBy('periodo.per_nombre','asc')
+    .orderBy('labor.lab_nombre','asc')
+    .orderBy('labor.lab_horas','asc')
   }
 
   public async indexAllActiveByDocente(num_doc: number){
@@ -254,11 +275,11 @@ export default class EvaluacionesController {
     .join('labor', 'evaluacion.lab_id','labor.lab_id')
     .join('tipo_labor','labor.tl_id','tipo_labor.tl_id')
     .select(
-      "eva_id",
+      'eva_id',
+      'periodo.per_nombre',
       'labor.lab_nombre',
       'tipo_labor.tl_descripcion',
       'labor.lab_horas',
-      //CONSULTA PENDIENTE PARA LA DESCRIPCIÓN
       'periodo.per_fecha_inicio',
       'periodo.per_fecha_fin',
       'evaluacion.eva_estado',
@@ -267,6 +288,9 @@ export default class EvaluacionesController {
     )
     .where('usuario.usu_num_doc','=',num_doc)
     .andWhere("evaluacion.eva_estado","like","En ejecución")
+    .orderBy('periodo.per_nombre','asc')
+    .orderBy('labor.lab_nombre','asc')
+    .orderBy('labor.lab_horas','asc')
   }
 
   public async indexAllInactiveByDocente(num_doc: number){
@@ -278,11 +302,11 @@ export default class EvaluacionesController {
     .join('labor', 'evaluacion.lab_id','labor.lab_id')
     .join('tipo_labor','labor.tl_id','tipo_labor.tl_id')
     .select(
-      "eva_id",
+      'eva_id',
+      'periodo.per_nombre',
       'labor.lab_nombre',
       'tipo_labor.tl_descripcion',
       'labor.lab_horas',
-      //CONSULTA PENDIENTE PARA LA DESCRIPCIÓN
       'periodo.per_fecha_inicio',
       'periodo.per_fecha_fin',
       'evaluacion.eva_estado',
@@ -291,6 +315,9 @@ export default class EvaluacionesController {
     )
     .where('usuario.usu_num_doc','=',num_doc)
     .andWhere("evaluacion.eva_estado","like","Terminado")
+    .orderBy('periodo.per_nombre','asc')
+    .orderBy('labor.lab_nombre','asc')
+    .orderBy('labor.lab_horas','asc')
   }
 
   public async store(evaluacion: Evaluacion) {
